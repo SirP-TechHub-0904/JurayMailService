@@ -10,9 +10,7 @@ namespace Domain.Models
 {
     public class AppUser : IdentityUser
     {
-
-        [Display(Name = "Fullname")]
-        public string? Fullname { get; set; }
+        public long? ProfileId { get; set; }
 
         public DateTime Date { get; set; }
 

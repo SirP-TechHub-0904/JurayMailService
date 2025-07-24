@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks; 
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -39,7 +39,10 @@ namespace Infrastructure.Repositories
 
         public async Task<int> GetEmailsCountByUserId(string userId)
         {
-            return await _context.EmailLists.Where(x => x.AppUserId == userId).CountAsync();
+            return await _context.EmailLists.Where(x => x.AppUserId == userId)
+                .Select(x => x.Email)
+        .Distinct()
+        .CountAsync();
         }
 
         public async Task<List<EmailList>> ListByGroupId(long groupId)

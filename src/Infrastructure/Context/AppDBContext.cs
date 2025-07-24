@@ -22,5 +22,9 @@ namespace Infrastructure.Context
         public DbSet<EmailGroup> EmailGroups { get; set; }
         public DbSet<Server> Servers { get; set; }
         public DbSet<GroupSendingProject> GroupSendingProjects { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<UserSubscription> UserSubscriptions { get; set; }
     }
 }

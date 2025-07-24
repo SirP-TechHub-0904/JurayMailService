@@ -28,4 +28,10 @@
     <ProjectReference Include="..\src\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Pages\SubscriptionPage\" />
+    <Folder Include="Areas\Admin\Pages\WalletPage\" />
+    <Folder Include="Areas\Admin\Pages\TransactionPage\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿using Application.DTO;
 using Domain.Interfaces;
 using Domain.Models;
+using Infrastructure.Repositories;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,21 @@ namespace Application.Queries.DashboardQueries
 
         public class GetDashboardQueryHandler : IRequestHandler<GetDashboardQuery, DashboardDto>
         {
+
+            private readonly IEmailResponseStatusRepository _emailresponse;
             private readonly IEmailListRepository _emailListRepository;
             private readonly IEmailProjectRepository _emailProjectRepository;
-            public GetDashboardQueryHandler(IEmailListRepository emailListRepository, IEmailProjectRepository emailProjectRepository)
+
+            private readonly IWalletRepository _walletRepository;
+            private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+
+            public GetDashboardQueryHandler(IEmailListRepository emailListRepository, IEmailProjectRepository emailProjectRepository, IEmailResponseStatusRepository emailresponse, IWalletRepository walletRepository, IUserSubscriptionRepository userSubscriptionRepository)
             {
                 _emailListRepository = emailListRepository;
                 _emailProjectRepository = emailProjectRepository;
+                _emailresponse = emailresponse;
+                _walletRepository = walletRepository;
+                _userSubscriptionRepository = userSubscriptionRepository;
             }
 
             public async Task<DashboardDto> Handle(GetDashboardQuery request, CancellationToken cancellationToken)
@@ -37,9 +47,37 @@ namespace Application.Queries.DashboardQueries
                 //get project
                 dashboard.AllProjects = await _emailProjectRepository.GetProjectCountByUserId(request.UserId);
                 dashboard.AllEmails = await _emailListRepository.GetEmailsCountByUserId(request.UserId);
+                dashboard.MonthlyStats = await _emailresponse.GetMonthlyStatsByUserIdAsync(request.UserId);
 
                 //emails
+                var dataresult = await _emailProjectRepository.GetDashboardStatsByUserIdAsync(request.UserId);
+                // This Month
+                dashboard.ThisMonthTotalProjects = dataresult.ThisMonthTotalProjects;
+                dashboard.ThisMonthTotalSubmitted = dataresult.ThisMonthTotalSubmitted;
+                dashboard.ThisMonthTotalDelivered = dataresult.ThisMonthTotalDelivered;
+                dashboard.ThisMonthTotalOpened = dataresult.ThisMonthTotalOpened;
 
+                // All Time
+                dashboard.AllTimeTotalProjects = dataresult.AllTimeTotalProjects;
+                dashboard.AllTimeTotalSubmitted = dataresult.AllTimeTotalSubmitted;
+                dashboard.AllTimeTotalDelivered = dataresult.AllTimeTotalDelivered;
+                dashboard.AllTimeTotalOpened = dataresult.AllTimeTotalOpened;
+
+                // Statistics
+                dashboard.TotalEmailsInSystemWithoutDuplicate = dataresult.TotalEmailsInSystemWithoutDuplicate;
+                dashboard.TotalAmountSpent = dataresult.TotalAmountSpent;
+
+                var existingWallet = await _walletRepository.GetByUserIdAsync(request.UserId);
+                if (existingWallet == null)
+                {
+                    dashboard.Balance = existingWallet.Balance;
+                }
+
+                var existingSubscription = await _userSubscriptionRepository.GetByUserIdAsync(request.UserId);
+                if (existingSubscription == null)
+                {
+                    dashboard.Limit = existingSubscription.RemainingEmailsForMonth;
+                }
 
                 return dashboard;
 

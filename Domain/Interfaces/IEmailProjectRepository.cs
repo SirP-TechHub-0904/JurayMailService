@@ -1,4 +1,5 @@
-﻿using Domain.GenericInterface;
+﻿using Domain.DTO;
+using Domain.GenericInterface;
 using Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -12,5 +13,6 @@ namespace Domain.Interfaces
     {
         Task<int> GetProjectCountByUserId(string userId);
         Task<List<EmailProject>> GetAllByUserId(string userId);
+        Task<DashboardModelDto> GetDashboardStatsByUserIdAsync(string userId);
     }
 }

@@ -22,7 +22,7 @@ namespace JurayMailService.Web.Background
             _logger.LogInformation("MyBackgroundService is starting.");
 
             // Set up Timer1 to run after 1 minute
-            _timer1 = new Timer(DoWork1, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(20));
+            //_timer1 = new Timer(DoWork1, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(20));
             return Task.CompletedTask;
         }
 

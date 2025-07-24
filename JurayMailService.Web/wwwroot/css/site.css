@@ -1,22 +1,480 @@
-html {
-  font-size: 14px;
+ @-webkit-keyframes spin {
+    0%
+
+{
+    -webkit-transform: rotate(0deg);
 }
 
-@media (min-width: 768px) {
-  html {
+100% {
+    -webkit-transform: rotate(360deg);
+}
+
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+input.bito-email-input:-webkit-autofill,
+input.bito-email-input:-webkit-autofill:hover,
+input.bito-email-input:-webkit-autofill:focus {
+    -webkit-text-fill-color: rgb(255, 255, 255);
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+#bito-body::-webkit-scrollbar,
+#emptyDiv-inner::-webkit-scrollbar,
+#loginParentDiv-outer::-webkit-scrollbar {
+    width: 4px;
+    border-radius: 24px;
+    color: #7a8084;
+}
+
+#bito-body::-webkit-scrollbar-thumb,
+#emptyDiv-inner::-webkit-scrollbar-thumb,
+#loginParentDiv-outer::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    #bito-body::-webkit-scrollbar-thumb:hover,
+    #emptyDiv-inner::-webkit-scrollbar-thumb:hover,
+    #loginParentDiv-outer::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+.login-network-error-container {
+    padding: 10px 16px 8px;
+    color: rgb(255 0 0);
+}
+
+#loader {
+    background-color: #00000085;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    z-index: 3002;
+    opacity: 9999;
+}
+
+.spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    vertical-align: text-bottom;
+    border: 1.75px solid #fff;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spinner-border .75s linear infinite;
+    margin-top: -30px
+}
+
+@keyframes spinner-border {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.feature-icon {
+    margin-bottom: 15px;
+    color: #f73164;
+}
+
+.jbuzz-feature-card {
+    padding: 25px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+    .jbuzz-feature-card:hover {
+        transform: translateY(-5px);
+    }
+     
+.payment-methods {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.payment-methods li {
     font-size: 16px;
-  }
+    font-weight: 500;
+}
+ 
+.jbuzz-feature-card .feature-icon {
+    font-size: 40px;
+    color: #f73164;
+    margin-bottom: 20px;
+}
+ 
+.jbuzz-feature-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px 20px;
+    margin-bottom: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    transition: transform 0.3s ease;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.jbuzz-feature-card:hover {
+    transform: translateY(-5px);
 }
 
-html {
-  position: relative;
-  min-height: 100%;
+.jbuzz-feature-card img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
 }
 
-body {
-  margin-bottom: 60px;
+.jbuzz-feature-card h6 {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
 }
+
+.jbuzz-feature-card p {
+    text-align: justify;
+    font-size: 14.5px;
+    color: #555;
+    flex-grow: 1;
+}
+
+.jbuzz-get-started-wrapper {
+    text-align: center;
+    margin-top: 30px;
+}
+
+    .jbuzz-get-started-wrapper .btn-start {
+        font-size: 15px;
+        font-weight: 600;
+        padding: 12px 28px;
+        background-color: #ff6600;
+        color: #fff;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+    }
+
+        .jbuzz-get-started-wrapper .btn-start:hover {
+            background-color: #e55d00;
+        }
+         
+.payment-methods {
+    list-style: none;
+    padding-left: 0;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.payment-methods li {
+    background: #f4f4f4;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+ 
+.payment-methods li {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.payment-methods i {
+    margin-right: 10px;
+    color: #f73164;
+} 
+.contact-info-area {
+    background-color: #000;
+    color: #fff;
+    padding: 60px 0;
+}
+
+.contact-info-area h6 {
+    color: #fff;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.contact-info-area p {
+    color: #ddd;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.social-buttons {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+    .social-buttons li a {
+        font-size: 20px;
+        color: #fff;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+        .social-buttons li a:hover {
+            color: #ff6600;
+        }
+
+.whatsapp-button {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 15px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+}
+
+    .whatsapp-button:hover {
+        background-color: #1ebe5d;
+    }
+
+.clients-area {
+    background-color: #f8f9fa;
+    padding: 60px 0;
+}
+
+.clients-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.client-logo {
+    height: 60px;
+    max-width: 100%;
+    object-fit: contain;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #269dd6;
+    border-radius: 50%;
+}
+
+.footer-dark {
+    background-color: #000000 !important;
+    padding: 60px 0;
+    color: #ffffff;
+}
+
+.footer-dark h6 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.footer-dark p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.footer-dark i {
+    margin-right: 8px;
+    color: #269dd6;
+}
+
+.footer-dark .social-buttons {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.footer-dark .social-buttons li a {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    background-color: #269dd6;
+    color: #ffffff;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.footer-dark .social-buttons li a:hover {
+    background-color: #1c7db4;
+    transform: scale(1.1);
+}
+
+.whatsapp-button {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #25D366;
+    color: white !important;
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.whatsapp-button:hover {
+    background-color: #1ebe5b;
+    transform: translateY(-2px);
+}
+.footer-dark {
+    background-color: #000000 !important;
+    padding: 60px 0;
+    color: #ffffff;
+}
+
+    .footer-dark h6 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: #ffffff;
+    }
+
+    .footer-dark p {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .footer-dark i {
+        margin-right: 8px;
+        color: #269dd6;
+    }
+
+    .footer-dark .social-buttons {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+    }
+
+        .footer-dark .social-buttons li a {
+            display: inline-block;
+            width: 36px;
+            height: 36px;
+            line-height: 36px;
+            background-color: #269dd6;
+            color: #ffffff;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+            .footer-dark .social-buttons li a:hover {
+                background-color: #1c7db4;
+                transform: scale(1.1);
+            }
+
+.whatsapp-button {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: #25D366;
+    color: white !important;
+    padding: 10px 20px;
+    font-weight: 600;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+    .whatsapp-button:hover {
+        background-color: #1ebe5b;
+        transform: translateY(-2px);
+    }
+.social-buttons {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+    .social-buttons li a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        color: inherit;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+        .social-buttons li a:hover {
+            transform: translateY(-3px);
+        }
+
+    /* Brand colors */
+    .social-buttons li:nth-child(1) a {
+        color: #1877f2;
+    }
+    /* Facebook */
+    .social-buttons li:nth-child(2) a {
+        color: #1da1f2;
+    }
+    /* Twitter */
+    .social-buttons li:nth-child(3) a {
+        color: #e4405f;
+    }
+    /* Instagram */
+    .social-buttons li:nth-child(4) a {
+        color: #0a66c2;
+    }
+/* LinkedIn */

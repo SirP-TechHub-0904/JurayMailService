@@ -2,41 +2,227 @@
 @model JurayMailService.Web.Areas.User.Pages.Account.IndexModel
 @{
 }
+
+<style>
+    @@media (min-width: 1200px) {
+    .col-lg-3 .small-box h3, .col-md-3 .small-box h3, .col-xl-3 .small-box h3 {
+        font-size: 1.52rem;
+        margin: 0;
+    }
+}
+    .small-box {
+
+        height: 60px;
+    }
+    @@media (min-width: 1200px) {
+    .col-lg-3 .small-box h3, .col-md-3 .small-box h3, .col-xl-3 .small-box h3 {
+        font-size: 1.52rem;
+        margin: 0;
+    }
+}
+    .small-box p {
+        font-size: 0.81rem;
+    }
+    .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 0.25rem 1.2rem;
+    }
+    .small-box > .inner {
+        padding: 1px 10px;
+    }
+    .small-box p {
+        margin-top: 0;
+        margin-bottom: 0rem;
+    }
+    hr {
+        margin-top: .1rem;
+        margin-bottom: .1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, .1);
+    }
+    .card-header {
+        padding: .175rem 1.25rem;
+        
+    }
+    .card-title {
+        font-size: 1.04rem;
+    }
+</style>
+
+
 <div class="card">
+
     <div class="card-header">
-        <h3 class="card-title">
-            DASHBOARD
-        </h3>
-
-
+        <h3 class="card-title">This Month (@DateTime.UtcNow.ToString("MMMM yyyy"))</h3>
     </div>
-    <!-- /.card-header -->
     <div class="card-body">
         <div class="row">
-
-            <div class="col-lg-6 col-6 dashboard-1">
-                <!-- small box -->
+            <div class="col-lg-3 col-6">
                 <div class="small-box bg-primary">
                     <div class="inner">
-                        <h3>@Model.DashboardDto.AllProjects</h3>
-
+                        <h3>@Model.DashboardDto.ThisMonthTotalProjects</h3>
                         <p>Total Projects</p>
                     </div>
-
                 </div>
             </div>
-
-            <div class="col-lg-6 col-6 dashboard-1">
-                <!-- small box -->
-                <div class="small-box bg-dark">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>@Model.DashboardDto.AllEmails</h3>
-
-                        <p>Emails</p>
+                        <h3>@Model.DashboardDto.ThisMonthTotalSubmitted</h3>
+                        <p>Total Submitted</p>
                     </div>
-
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.ThisMonthTotalDelivered</h3>
+                        <p>Total Delivered</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.ThisMonthTotalOpened</h3>
+                        <p>Total Opened</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <hr />
+    <div class="card-header">
+        <h3 class="card-title">All</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.AllTimeTotalProjects</h3>
+                        <p>Total Projects</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.AllTimeTotalSubmitted</h3>
+                        <p>Total Submitted</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.AllTimeTotalDelivered</h3>
+                        <p>Total Delivered</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.AllTimeTotalOpened</h3>
+                        <p>Total Opened</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr />
+    <div class="card-header">
+        <h3 class="card-title">Statistics</h3>
+    </div>
+    <div class="card-body"> 
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.TotalEmailsInSystemWithoutDuplicate</h3>
+                        <p>Total Emails</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-dark">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.Balance.ToString("N2")</h3>
+                        <p>Wallet Balance</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-dark">
+                    <div class="inner">
+                        <h3>@Model.DashboardDto.Limit</h3>
+                        <p>Remaining Limit</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <hr />
+    <div class="card-body">
+
+        <div class="row">
+            <div class="col-12">
+                <h4>Email Response Statistics</h4>
+
+                <canvas id="barChart"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Use JSON from Razor Model
+        const monthlyStats = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.DashboardDto.MonthlyStats));
+
+        console.log("Received Data:", monthlyStats);
+
+        const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        let sentData = new Array(12).fill(0);
+        let deliveredData = new Array(12).fill(0);
+        let receivedData = new Array(12).fill(0);
+
+        // Assign values from Razor Model JSON
+        monthlyStats.forEach(stat => {
+            let index = stat.Month - 1;
+            sentData[index] = stat.TotalSent || 0;
+            deliveredData[index] = stat.TotalDelivered || 0;
+            receivedData[index] = stat.TotalReceived || 0;
+        });
+
+        console.log("Updated Chart Data:", { sentData, deliveredData, receivedData });
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('barChart').getContext('2d');
+        window.barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: monthLabels,
+                datasets: [
+                    { label: 'Total Sent', data: sentData, backgroundColor: 'rgba(54, 162, 235, 0.6)' },
+                    { label: 'Total Delivered', data: deliveredData, backgroundColor: 'rgba(75, 192, 192, 0.6)' },
+                    { label: 'Total Received', data: receivedData, backgroundColor: 'rgba(255, 159, 64, 0.6)' }
+                ]
+            },
+            options: { responsive: true, scales: { x: { stacked: false }, y: { beginAtZero: true } } }
+        });
+    });
+    </script>
+}

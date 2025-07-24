@@ -25,7 +25,7 @@ namespace JurayMailService.Web.Background
         public Task StartAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("{Service} is running.", nameof(Background));
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(20));
+            //_timer = new Timer(DoWork, null, TimeSpan.Zero, TimeSpan.FromSeconds(20));
 
             return _completedTask;
         }

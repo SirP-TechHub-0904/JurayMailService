@@ -3,4 +3,500 @@
 @{
     ViewData["Title"] = "Home page";
 }
+<div class="home-area parallax" style="background-position: 50% 0px;background: url(../img/j-buzz-home.jpg) fixed; ">
+    <div class="container">
+        <div class="top-bar">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 mobile-center">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="~/img/logo-white.png" alt="JBUZZ Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 text-right mobile-center">
+                    <a asp-page="/Account/Login" asp-area="Identity" class="button red jbuzz-primary">
+                        Login
+                    </a>
+                    <a href="mailto:support@jbuzz.africa" class="button red jbuzz-secondary">
+                        Support <img src="~/web/support.png" alt="Support Icon">
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="home-more-area">
+            <div class="row">
+                <div class="col-md-6 tab-center">
+                    <img src="~/img/j-buzz-home.png" alt="Messaging Dashboard Preview">
+                </div>
+                <div class="col-md-6 text-center">
+                    <div class="home-right">
+                        <div class="featured-offer">
+                            <div class="featured-offer-innr">
+                                <p>Start Free</p>
+                                <h3><span>₦</span>0</h3>
+                                <p>/Month</p>
+                            </div>
+                        </div>
+                        <h6>
+                            Email & SMS Marketing Made Simple
+                        </h6>
+                        <h2>Send Smarter with JBUZZ</h2>
+                        <h5>smtp // jbuzz domain // campaign reports</h5>
+                        <ul>
+                            <li>
+                                <a href="#more-feature" class="button orange more-feature jbuzz-primary jbuzz-bg-primary">Explore Features</a>
+                            </li>
+                            <li>
+                                <a href="#pricing" class="button blue go-form jbuzz-secondary jbuzz-text-primary jbuzz-border-primary">Get Started Free</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="features-area">
+    <div class="container">
+        <div class="features-area-box-outer">
+            <div class="features-area-box">
+                <div class="row text-center">
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-feature">
+                            <h6>Custom Email Sending</h6>
+                            <div class="fetu-line"></div>
+                            <p>
+                                Send from your own domain using SMTP or use yourname@jbuzz.africa instantly—no setup required.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-feature">
+                            <h6>Reliable SMS Delivery</h6>
+                            <div class="fetu-line"></div>
+                            <p>
+                                Reach phones across Nigeria and beyond with high-speed SMS routes and real-time delivery.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6">
+                        <div class="single-feature">
+                            <h6>Analytics & Logs</h6>
+                            <div class="fetu-line"></div>
+                            <p>
+                                Track open rates, delivery status, click activity, and bounce logs all in one clean dashboard.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="more-features-area" id="more-feature">
+    <div class="container">
+        <div class="section-head">
+            <div class="row text-center">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h3>Why Choose JBUZZ?</h3>
+                    <p>
+                        From free-tier access to advanced campaign tools, JBUZZ is built to help you grow, connect, and convert with ease. Automate, personalize, and deliver messages that matter.
+                    </p>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Feature Cards -->
+            <div class="col-md-4 col-sm-6">
+                <div class="jbuzz-feature-card text-center">
+                    <div class="feature-icon jbuzz-text-primary jbuzz-text-primary">
+                        <i class="fas fa-shield-alt fa-3x"></i>
+                    </div>
+                    <h6>Verified Email Sending</h6>
+                    <p>Authenticate your sender identity via SPF, DKIM, or simply send from yourname@jbuzz.africa with no setup needed.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="jbuzz-feature-card text-center">
+                    <div class="feature-icon jbuzz-text-primary">
+                        <i class="fas fa-user-tag fa-3x"></i>
+                    </div>
+                    <h6>Contact Groups & Tags</h6>
+                    <p>Easily organize your audience using smart contact lists, segments, and tagging options to send more targeted messages.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="jbuzz-feature-card text-center">
+                    <div class="feature-icon jbuzz-text-primary">
+                        <i class="fas fa-chart-line fa-3x"></i>
+                    </div>
+                    <h6>Analytics & Reports</h6>
+                    <p>View real-time delivery stats, opens, clicks, bounces, unsubscribes, and SMS delivery receipts in one dashboard.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="jbuzz-feature-card text-center">
+                    <div class="feature-icon jbuzz-text-primary">
+                        <i class="fas fa-paint-brush fa-3x"></i>
+                    </div>
+                    <h6>Beautiful Templates</h6>
+                    <p>Choose from ready-made email templates or create your own with our drag-and-drop builder (coming soon).</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="jbuzz-feature-card text-center">
+                    <div class="feature-icon jbuzz-text-primary">
+                        <i class="fas fa-clock fa-3x"></i>
+                    </div>
+                    <h6>Campaign Scheduling</h6>
+                    <p>Schedule your email or SMS blasts to go out exactly when your audience is most likely to engage — day or night.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="jbuzz-feature-card text-center">
+                    <div class="feature-icon jbuzz-text-primary">
+                        <i class="fas fa-headset fa-3x"></i>
+                    </div>
+                    <h6>Support That Cares</h6>
+                    <p>Our team is here to assist you via email or WhatsApp. Got delivery issues or setup needs? We’re just one ping away.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="jbuzz-get-started-wrapper text-center mt-4">
+            <a href="#pricing" class="btn-start jbuzz-secondary">Get Started for Free</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="cta-area parallax" style="background-position: 50% 525px;" id="pricing">
+    <div class="container">
+        <div class="row">
+
+
+            <div class="col-md-9 col-sm-12">
+                <h5>Get</h5>
+                <h1>50 Free Emails & SMS</h1>
+                <h5>Every Month — No Credit Card</h5>
+            </div>
+
+            <div class="col-md-3 mobile-center">
+                <a href="#pricing" class="button orange jbuzz-primary">Start Free Now</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="pricing-area">
+    <div class="container">
+        <div class="section-head">
+            <div class="row text-center">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h3>JBUZZ Messaging Plans</h3>
+                    <p>
+                        Choose the perfect plan for your business. Start for free and upgrade anytime as your messaging needs grow.
+                    </p>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <!-- Free Plan -->
+            <div class="col-md-4 col-sm-6">
+                <div class="single-pricing">
+                    <div class="top-outer">
+                        <div class="top red">
+                            <img src="~/web/plan-icon.png" alt="Free Plan">
+                            <h4>Free Plan</h4>
+                        </div>
+                    </div>
+                    <div class="bottom text-center red-color">
+                        <h2>
+                            <span>₦</span>0 <small>/Month</small>
+                        </h2>
+                        <div class="price-line"></div>
+                        <ul>
+                            <li><strong>50 Emails</strong> Monthly</li>
+                            <li><strong>50 SMS</strong> Monthly</li>
+                            <li><strong>Use @@jbuzz.africa</strong> Sender</li>
+                            <li><strong>Basic Logs</strong> & Stats</li>
+                        </ul>
+                        <a href="/Account/Register" class="button black red jbuzz-primary">Start Free</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="col-md-4 col-sm-6">
+                <div class="single-pricing">
+                    <div class="top-outer">
+                        <div class="top dark-blue">
+                            <img src="~/web/plan-icon.png" alt="Pro Plan">
+                            <h4>Pro Plan</h4>
+                        </div>
+                    </div>
+                    <div class="bottom text-center dark-blue-color">
+                        <h2>
+                            <span>₦</span>2,000 <small>/Month</small>
+                        </h2>
+                        <div class="price-line"></div>
+                        <ul>
+                            <li><strong>500 Emails</strong> Monthly</li>
+                            <li><strong>500 SMS</strong> Monthly</li>
+                            <li><strong>Custom SMTP</strong> Allowed</li>
+                            <li><strong>Delivery Reports</strong> Included</li>
+                        </ul>
+                        <a href="/Account/Upgrade?plan=pro" class="button black dark-blue jbuzz-primary">Upgrade to Pro</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="col-md-4 col-sm-6">
+                <div class="single-pricing">
+                    <div class="top-outer">
+                        <div class="top blue">
+                            <img src="~/web/plan-icon.png" alt="Premium Plan">
+                            <h4>Premium Plan</h4>
+                        </div>
+                    </div>
+                    <div class="bottom text-center blue-color">
+                        <h2>
+                            <span>₦</span>4,500 <small>/Month</small>
+                        </h2>
+                        <div class="price-line"></div>
+                        <ul>
+                            <li><strong>1,000 Emails</strong> Monthly</li>
+                            <li><strong>1,000 SMS</strong> Monthly</li>
+                            <li><strong>Unlimited Campaigns</strong></li>
+                            <li><strong>Priority Support</strong></li>
+                        </ul>
+                        <a href="/Account/Upgrade?plan=premium" class="button black blue jbuzz-primary">Go Premium</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="testimonial-area">
+    <div class="container">
+        <div class="section-head">
+            <div class="row text-center">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h3>What Our Users Say About JBUZZ</h3>
+                    <p>
+                        From small businesses to digital agencies, JBUZZ has helped countless users connect better and grow faster. Here's what some of them had to say.
+                    </p>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="testimonial-innr parallax" style="background-position: 50% 525px;">
+        <div class="container">
+            <div id="jbuzz-testimonials" class="owl-carousel owl-theme">
+
+                <!-- Testimonial 1 -->
+                <div class="single-testimonial text-center">
+                    <blockquote>
+                        JBUZZ makes it ridiculously easy to send professional emails and SMS to our clients. We use it every day to engage our customers and boost conversions.
+                    </blockquote>
+                    <h5>TrendyThings.ng <small>— E-commerce</small></h5>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="single-testimonial text-center">
+                    <blockquote>
+                        I love the option to send from my business email or just use @@jbuzz.africa. It’s flexible, fast, and support is always responsive.
+                    </blockquote>
+                    <h5>SM Consulting <small>— Digital Agency</small></h5>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="single-testimonial text-center">
+                    <blockquote>
+                        The dashboard is super intuitive. Setting up campaigns took less than 5 minutes, and our engagement rates have doubled!
+                    </blockquote>
+                    <h5>RealBiz <small>— Real Estate</small></h5>
+                </div>
+
+                <!-- Testimonial 4 -->
+                <div class="single-testimonial text-center">
+                    <blockquote>
+                        With JBUZZ, I was able to reach all my customers during Black Friday with just one click. Super affordable too!
+                    </blockquote>
+                    <h5>DealsPro <small>— Deals Platform</small></h5>
+                </div>
+
+                <!-- Testimonial 5 -->
+                <div class="single-testimonial text-center">
+                    <blockquote>
+                        The support team is top-notch. They helped me get my sender domain verified and walked me through my first campaign.
+                    </blockquote>
+                    <h5>Upfreelance <small>— Freelancer Platform</small></h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="form-area" id="form-area">
+    <div class="container">
+        <div class="form-area-box-outer">
+            <div class="form-area-box">
+
+                <!-- Heading -->
+                <div class="section-head">
+                    <div class="row text-center">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <h3>Start Sending in Minutes</h3>
+                            <p>
+                                Enter your email to get started with JBUZZ. We'll contact you with setup support or send you updates on how to activate your free account.
+                            </p>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="row">
+                    <div class="col-md-2 col-sm-3"></div>
+                    <div class="col-md-8 col-sm-6">
+                        <div class="form">
+                            <form id="" class="contact-form text-center" role="form" method="POST">
+
+                                <!-- Success Message -->
+                                <h6 class="success" style="display:none;">
+                                    <span class="colored-text icon_check"></span>
+                                    Thank you! We'll be in touch shortly.
+                                </h6>
+
+                                <!-- Error Message -->
+                                <h6 class="error" style="display:none;">
+                                    <span class="colored-text icon_error-circle_alt"></span>
+                                    Please enter a valid email address.
+                                </h6>
+
+                                <div class="row">
+                                    <div class="col-md-8 no-padding">
+                                        <input id="cf-email" type="email" name="email" placeholder="Enter your email address" required>
+                                    </div>
+                                    <div class="col-md-4 no-padding">
+                                        <input type="submit" class="button dark-blue no-shadow jbuzz-primary" value="Notify Me" id="submit" name="submit">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-sm-3"></div>
+                </div>
+
+                <!-- Payment Logos -->
+                <div class="row text-center">
+                    <div class="col-md-12">
+                        <p>We Accept</p>
+
+                        <ul class="payment-methods" style="list-style: none; padding-left: 0; text-align: center;">
+                            <li><i class="fas fa-credit-card"></i> Paystack</li>
+                            <li><i class="fas fa-money-bill-wave"></i> Flutterwave</li>
+                            <li><i class="fab fa-cc-visa"></i> Visa</li>
+                            <li><i class="fab fa-cc-mastercard"></i> Mastercard</li>
+                        </ul>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
  
+<div class="clients-area text-center">
+    <div class="container">
+        <h4 class="clients-title">Top Clients</h4>
+        <div class="col-md-12">
+            <ul>
+                <li>
+                    <img src="~/img/aani-logo.png" alt="client" style="height:50px;">
+                </li>
+                <li>
+                    <img src="~/img/juray-logo.png" alt="client" style="height:50px;">
+                </li>
+                <li>
+                    <img src="~/img/Koboview-logo-main.png" alt="client" style="height:50px;">
+                </li>
+                <li>
+                    <img src="~/img/lojour-logo-green.png" alt="client" style="height:50px;">
+                </li>
+            </ul>
+        </div>
+</div>
+
+
+
+<div class="contact-info-area footer-dark">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <h6 class="text-white">Get in Touch with Us</h6>
+                <p class="text-white-50">
+                    <i class="fas fa-map-marker-alt"></i> JBUZZ Africa<br>
+                    44 Azikiwe Road, Umuahia, Nigeria<br>
+                    <i class="fas fa-envelope"></i> support@jbuzz.africa<br>
+                    <i class="fas fa-phone"></i> +234 901 234 5678
+                </p>
+                <ul class="social-buttons">
+                    <li><a href="https://facebook.com/jbuzzafrica" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://twitter.com/jbuzzafrica" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                    <li><a href="https://instagram.com/jbuzz.africa" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                    <li><a href="https://linkedin.com/company/jbuzzafrica" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+                </ul>
+
+                <a class="whatsapp-button" target="_blank" href="https://wa.me/2349012345678">
+                    <i class="fab fa-whatsapp"></i> Chat with Us on WhatsApp
+                </a>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+</div>
+

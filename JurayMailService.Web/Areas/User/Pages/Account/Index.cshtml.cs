@@ -1,5 +1,6 @@
 using Application.DTO;
 using Application.Queries.DashboardQueries;
+using DocumentFormat.OpenXml.Bibliography;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,6 +23,9 @@ namespace JurayMailService.Web.Areas.User.Pages.Account
         public async Task<IActionResult> OnGetAsync()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+
 
             GetDashboardQuery dashQuery = new GetDashboardQuery(userId);
             DashboardDto = await _mediator.Send(dashQuery);
