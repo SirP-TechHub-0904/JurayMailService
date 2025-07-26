@@ -24,10 +24,10 @@ namespace Application.Commands.WalletCommands
     public class AddWalletCommandHandler : IRequestHandler<AddWalletCommand>
     {
         private readonly IWalletRepository _walletRepository;
-        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+        private readonly IAccountSubscriptionRepository _userSubscriptionRepository;
         private readonly IPlanRepository _plan;
 
-        public AddWalletCommandHandler(IWalletRepository walletRepository, IUserSubscriptionRepository userSubscriptionRepository, IPlanRepository plan)
+        public AddWalletCommandHandler(IWalletRepository walletRepository, IAccountSubscriptionRepository userSubscriptionRepository, IPlanRepository plan)
         {
             _walletRepository = walletRepository;
             _userSubscriptionRepository = userSubscriptionRepository;
@@ -67,7 +67,7 @@ namespace Application.Commands.WalletCommands
 
                     if (zeroPlan != null)
                     {
-                        UserSubscription sub = new UserSubscription
+                        AccountSubscription sub = new AccountSubscription
                         {
                             UserId = request.UserId,
                             SubscriptionStartDate = DateTime.UtcNow,

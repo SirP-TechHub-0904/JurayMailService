@@ -21,4 +21,16 @@ namespace Infrastructure.Repositories
         }
 
     }
+
+
+    public sealed class PlanFeatureRepository : Repository<PlanFeature>, IPlanFeatureRepository
+    {
+        private readonly AppDBContext _context;
+
+        public PlanFeatureRepository(AppDBContext context) : base(context)
+        {
+            _context = context;
+        }
+
+    }
 }

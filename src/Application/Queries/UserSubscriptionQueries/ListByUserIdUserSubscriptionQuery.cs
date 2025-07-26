@@ -7,22 +7,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries.UserSubscriptionQueries
+namespace Application.Queries.AccountSubscriptionQueries
 {
-    public sealed class ListAllUserSubscriptionQuery : IRequest<List<UserSubscription>>
+    public sealed class ListAllAccountSubscriptionQuery : IRequest<List<AccountSubscription>>
     {
         
          
-        public class ListAllUserSubscriptionQueryHandler : IRequestHandler<ListAllUserSubscriptionQuery, List<UserSubscription>>
+        public class ListAllAccountSubscriptionQueryHandler : IRequestHandler<ListAllAccountSubscriptionQuery, List<AccountSubscription>>
         {
-            private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+            private readonly IAccountSubscriptionRepository _userSubscriptionRepository;
 
-            public ListAllUserSubscriptionQueryHandler(IUserSubscriptionRepository userSubscriptionRepository)
+            public ListAllAccountSubscriptionQueryHandler(IAccountSubscriptionRepository userSubscriptionRepository)
             {
                 _userSubscriptionRepository = userSubscriptionRepository;
             }
 
-            public async Task<List<UserSubscription>> Handle(ListAllUserSubscriptionQuery request, CancellationToken cancellationToken)
+            public async Task<List<AccountSubscription>> Handle(ListAllAccountSubscriptionQuery request, CancellationToken cancellationToken)
             {
                 return await _userSubscriptionRepository.GetAllAsync();
 

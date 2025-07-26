@@ -29,9 +29,9 @@ namespace Application.Queries.DashboardQueries
             private readonly IEmailProjectRepository _emailProjectRepository;
 
             private readonly IWalletRepository _walletRepository;
-            private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+            private readonly IAccountSubscriptionRepository _userSubscriptionRepository;
 
-            public GetDashboardQueryHandler(IEmailListRepository emailListRepository, IEmailProjectRepository emailProjectRepository, IEmailResponseStatusRepository emailresponse, IWalletRepository walletRepository, IUserSubscriptionRepository userSubscriptionRepository)
+            public GetDashboardQueryHandler(IEmailListRepository emailListRepository, IEmailProjectRepository emailProjectRepository, IEmailResponseStatusRepository emailresponse, IWalletRepository walletRepository, IAccountSubscriptionRepository userSubscriptionRepository)
             {
                 _emailListRepository = emailListRepository;
                 _emailProjectRepository = emailProjectRepository;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static Domain.Enum.EnumStatus;
 
 namespace Domain.Models
 {
@@ -13,7 +14,10 @@ namespace Domain.Models
         public AppUser User { get; set; }
 
         public decimal Amount { get; set; } // Positive for deposits, negative for deductions
-        public string Type { get; set; } // "Deposit", "Subscription", "EmailCharge"
+        public TransactionType Type { get; set; }
         public DateTime TransactionDate { get; set; } = DateTime.UtcNow;
+        public string Reference { get; set; } // e.g., Paystack or Wallet reference
+
+        public string Description { get; set; }
     }
 }

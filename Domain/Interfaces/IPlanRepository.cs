@@ -11,4 +11,8 @@ namespace Domain.Interfaces
     public interface IPlanRepository : IRepository<Plan>         
     {
     }
+
+    public interface IPlanFeatureRepository : IRepository<PlanFeature>
+    {
+    }
 }

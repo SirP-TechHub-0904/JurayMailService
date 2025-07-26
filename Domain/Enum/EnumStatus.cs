@@ -33,5 +33,11 @@ namespace Domain.Enum
 
 
         }
+        public enum TransactionType
+        {
+            Deposit = 1,
+            Subscription = 2 
         }
+
+    }
 }

@@ -7,27 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Queries.UserSubscriptionQueries
+namespace Application.Queries.AccountSubscriptionQueries
 {
-    public sealed class GetByIdUserSubscriptionQuery : IRequest<UserSubscription>
+    public sealed class GetByIdAccountSubscriptionQuery : IRequest<AccountSubscription>
     {
-        public GetByIdUserSubscriptionQuery(long id)
+        public GetByIdAccountSubscriptionQuery(long id)
         {
             Id = id;
         }
 
         public long Id { get; set; }
 
-        public class GetByIdUserSubscriptionQueryHandler : IRequestHandler<GetByIdUserSubscriptionQuery, UserSubscription>
+        public class GetByIdAccountSubscriptionQueryHandler : IRequestHandler<GetByIdAccountSubscriptionQuery, AccountSubscription>
         {
-            private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+            private readonly IAccountSubscriptionRepository _userSubscriptionRepository;
 
-            public GetByIdUserSubscriptionQueryHandler(IUserSubscriptionRepository userSubscriptionRepository)
+            public GetByIdAccountSubscriptionQueryHandler(IAccountSubscriptionRepository userSubscriptionRepository)
             {
                 _userSubscriptionRepository = userSubscriptionRepository;
             }
 
-            public async Task<UserSubscription> Handle(GetByIdUserSubscriptionQuery request, CancellationToken cancellationToken)
+            public async Task<AccountSubscription> Handle(GetByIdAccountSubscriptionQuery request, CancellationToken cancellationToken)
             {
                 return await _userSubscriptionRepository.GetByIdAsync(request.Id);
 

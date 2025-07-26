@@ -72,7 +72,7 @@ namespace Application.Extensions
 
 
             services.AddTransient<IWalletRepository, WalletRepository>();
-            services.AddTransient<IUserSubscriptionRepository, UserSubscriptionRepository>();
+            services.AddTransient<IAccountSubscriptionRepository, AccountSubscriptionRepository>();
 
 
 

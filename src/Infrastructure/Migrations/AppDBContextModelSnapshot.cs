@@ -22,6 +22,39 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Models.AccountSubscription", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("PlanId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("RemainingEmailsForMonth")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SubscriptionEndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("SubscriptionStartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AccountSubscriptions");
+                });
+
             modelBuilder.Entity("Domain.Models.AppRole", b =>
                 {
                     b.Property<string>("Id")
@@ -335,6 +368,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
@@ -343,6 +377,31 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("Domain.Models.PlanFeature", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsHighlighted")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("PlanId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.ToTable("PlanFeatures");
                 });
 
             modelBuilder.Entity("Domain.Models.Server", b =>
@@ -386,12 +445,19 @@ namespace Infrastructure.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -402,39 +468,6 @@ namespace Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("Domain.Models.UserSubscription", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<long>("PlanId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("RemainingEmailsForMonth")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SubscriptionEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("SubscriptionStartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlanId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("UserSubscriptions");
                 });
 
             modelBuilder.Entity("Domain.Models.Wallet", b =>
@@ -565,6 +598,25 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Models.AccountSubscription", b =>
+                {
+                    b.HasOne("Domain.Models.Plan", "Plan")
+                        .WithMany()
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Models.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.Models.EmailGroup", b =>
                 {
                     b.HasOne("Domain.Models.AppUser", "AppUser")
@@ -655,6 +707,17 @@ namespace Infrastructure.Migrations
                     b.Navigation("EmailProject");
                 });
 
+            modelBuilder.Entity("Domain.Models.PlanFeature", b =>
+                {
+                    b.HasOne("Domain.Models.Plan", "Plan")
+                        .WithMany("Features")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+                });
+
             modelBuilder.Entity("Domain.Models.Server", b =>
                 {
                     b.HasOne("Domain.Models.AppUser", "User")
@@ -671,25 +734,6 @@ namespace Infrastructure.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Domain.Models.UserSubscription", b =>
-                {
-                    b.HasOne("Domain.Models.Plan", "Plan")
-                        .WithMany()
-                        .HasForeignKey("PlanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Models.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Plan");
 
                     b.Navigation("User");
                 });
@@ -759,6 +803,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("Domain.Models.EmailGroup", b =>
                 {
                     b.Navigation("Emails");
+                });
+
+            modelBuilder.Entity("Domain.Models.Plan", b =>
+                {
+                    b.Navigation("Features");
                 });
 #pragma warning restore 612, 618
         }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Interfaces
 {
-    public interface IUserSubscriptionRepository : IRepository<UserSubscription>
+    public interface IAccountSubscriptionRepository : IRepository<AccountSubscription>
     {
         Task<string> RenewSubscription(string userId);
-        Task<UserSubscription> GetByUserIdAsync(string userId);
+        Task<AccountSubscription> GetByUserIdAsync(string userId);
     }
 }

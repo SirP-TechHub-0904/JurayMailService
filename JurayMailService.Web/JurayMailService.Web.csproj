@@ -30,8 +30,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Pages\SubscriptionPage\" />
-    <Folder Include="Areas\Admin\Pages\WalletPage\" />
     <Folder Include="Areas\Admin\Pages\TransactionPage\" />
+    <Folder Include="Areas\Admin\Pages\WalletPage\" />
   </ItemGroup>
 
 </Project>

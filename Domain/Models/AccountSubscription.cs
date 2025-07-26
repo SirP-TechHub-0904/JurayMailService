@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class UserSubscription
+    public class AccountSubscription
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public string UserId { get; set; } // Foreign key to Users table
         public AppUser User { get; set; }
         public long PlanId { get; set; } // Foreign key to Plans table
         public DateTime SubscriptionStartDate { get; set; }
         public DateTime SubscriptionEndDate { get; set; }
-
+        public bool IsActive => DateTime.UtcNow >= SubscriptionStartDate && DateTime.UtcNow <= SubscriptionEndDate;
         public Plan Plan { get; set; }
 
 

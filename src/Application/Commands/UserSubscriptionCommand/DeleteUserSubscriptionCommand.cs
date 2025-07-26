@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.UserSubscriptionCommands
+namespace Application.Commands.AccountSubscriptionCommands
 {
-    public sealed class DeleteUserSubscriptionCommand : IRequest
+    public sealed class DeleteAccountSubscriptionCommand : IRequest
     {
-        public DeleteUserSubscriptionCommand(long id)
+        public DeleteAccountSubscriptionCommand(long id)
         {
             Id = id;
         }
@@ -19,16 +19,16 @@ namespace Application.Commands.UserSubscriptionCommands
 
     }
 
-    public class DeleteUserSubscriptionCommandHandler : IRequestHandler<DeleteUserSubscriptionCommand>
+    public class DeleteAccountSubscriptionCommandHandler : IRequestHandler<DeleteAccountSubscriptionCommand>
     {
-        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+        private readonly IAccountSubscriptionRepository _userSubscriptionRepository;
 
-        public DeleteUserSubscriptionCommandHandler(IUserSubscriptionRepository userSubscriptionRepository)
+        public DeleteAccountSubscriptionCommandHandler(IAccountSubscriptionRepository userSubscriptionRepository)
         {
             _userSubscriptionRepository = userSubscriptionRepository;
         }
 
-        public async Task Handle(DeleteUserSubscriptionCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteAccountSubscriptionCommand request, CancellationToken cancellationToken)
         {
 
             var userSubscription = await _userSubscriptionRepository.GetByIdAsync(request.Id);

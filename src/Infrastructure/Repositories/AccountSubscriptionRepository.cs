@@ -12,21 +12,21 @@ using System.Threading.Tasks;
 namespace Infrastructure.Repositories
 {
   
-    public sealed class UserSubscriptionRepository : Repository<UserSubscription>, IUserSubscriptionRepository
+    public sealed class AccountSubscriptionRepository : Repository<AccountSubscription>, IAccountSubscriptionRepository
     {
         private readonly AppDBContext _context;
 
-        public UserSubscriptionRepository(AppDBContext context) : base(context)
+        public AccountSubscriptionRepository(AppDBContext context) : base(context)
         {
             _context = context;
         }
-        public async Task<UserSubscription> GetByUserIdAsync(string userId)
+        public async Task<AccountSubscription> GetByUserIdAsync(string userId)
         {
-            return await _context.UserSubscriptions.FirstOrDefaultAsync(w => w.UserId == userId);
+            return await _context.AccountSubscriptions.FirstOrDefaultAsync(w => w.UserId == userId);
         }
         public async Task<string> RenewSubscription(string userId)
         {
-            var userSubscription = await _context.UserSubscriptions
+            var userSubscription = await _context.AccountSubscriptions
                 .Include(us => us.Plan)
                 .FirstOrDefaultAsync(us => us.UserId == userId);
 
@@ -44,7 +44,7 @@ namespace Infrastructure.Repositories
             {
                 UserId = userId,
                 Amount = -userSubscription.Plan.Price,
-                Type = "Subscription"
+                Type = Domain.Enum.EnumStatus.TransactionType.Subscription
             });
 
             // ✅ Reset Monthly Email Quota
@@ -58,7 +58,7 @@ namespace Infrastructure.Repositories
         }
         public async Task<(bool Success, string Message)> ProcessEmailSending(string userId)
         {
-            var userSubscription = await _context.UserSubscriptions
+            var userSubscription = await _context.AccountSubscriptions
                 .Include(us => us.Plan)
                 .FirstOrDefaultAsync(us => us.UserId == userId);
 

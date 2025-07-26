@@ -7,33 +7,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands.UserSubscriptionCommands
+namespace Application.Commands.AccountSubscriptionCommands
 {
-    public sealed class AddUserSubscriptionCommand : IRequest
+    public sealed class AddAccountSubscriptionCommand : IRequest
     {
-        public AddUserSubscriptionCommand(UserSubscription userSubscription)
+        public AddAccountSubscriptionCommand(AccountSubscription accountSubscription)
         {
-            UserSubscription = userSubscription;
+            AccountSubscription = accountSubscription;
         }
 
-        public UserSubscription UserSubscription { get; set; }
+        public AccountSubscription AccountSubscription { get; set; }
 
 
     }
 
-    public class AddUserSubscriptionCommandHandler : IRequestHandler<AddUserSubscriptionCommand>
+    public class AddAccountSubscriptionCommandHandler : IRequestHandler<AddAccountSubscriptionCommand>
     {
-        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+        private readonly IAccountSubscriptionRepository _userSubscriptionRepository;
 
-        public AddUserSubscriptionCommandHandler(IUserSubscriptionRepository userSubscriptionRepository)
+        public AddAccountSubscriptionCommandHandler(IAccountSubscriptionRepository userSubscriptionRepository)
         {
             _userSubscriptionRepository = userSubscriptionRepository;
         }
 
-        public async Task Handle(AddUserSubscriptionCommand request, CancellationToken cancellationToken)
+        public async Task Handle(AddAccountSubscriptionCommand request, CancellationToken cancellationToken)
         {
 
-            await _userSubscriptionRepository.AddAsync(request.UserSubscription);
+            await _userSubscriptionRepository.AddAsync(request.AccountSubscription);
 
 
         }

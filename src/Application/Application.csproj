@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\IdentityCommands\" />
-    <Folder Include="Queries\IdentityQueries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
     <PackageReference Include="EPPlus" Version="7.1.1" />
     <PackageReference Include="MediatR" Version="12.2.0" />
@@ -22,6 +17,11 @@
     <ProjectReference Include="..\..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\PostmarkEmailService\PostmarkEmailService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\IdentityCommands\" />
+    <Folder Include="Queries\IdentityQueries\" />
   </ItemGroup>
 
 </Project>
