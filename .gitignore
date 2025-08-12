@@ -361,3 +361,28 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore all appsettings files (including environment-specific versions)
+appsettings*.json
+
+# Ignore environment variable files
+.env
+.env.*
+.env.local
+.env.development
+.env.production
+
+# Ignore local secrets/config files
+secrets.json
+*.secret.json
+*.local.json
+
+# Ignore private keys and certificates
+*.key
+*.crt
+*.pem
+*.p12
+
+# Ignore backup files that might contain configs
+*.bak
+*.backup
