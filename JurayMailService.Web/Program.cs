@@ -16,7 +16,7 @@ builder.Services.AddDbContext<AppDBContext>(options =>
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddApplicationCustomServices();
 
-
+//
 
 builder.Services.AddTransient<PostmarkClient>(_ => new PostmarkClient(builder.Configuration.GetSection("PostmarkSettings")["ServerToken"]));
 
