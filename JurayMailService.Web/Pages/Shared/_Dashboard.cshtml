@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <title>Dashboard | Marketing Portal | Manage All Marketing</title>
+    <link rel="icon" href="~/img/Jbuzz-icon.png" type="image/x-icon" />
 
-    <title>Dashboard | Marketing Portal </title>
-    <link rel="icon" href="~/img/juray.png" type="image/x-icon" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
@@ -211,7 +211,7 @@
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
             <a href="/" class="brand-link" style="text-align: center; margin: 0 auto;">
-                <img src="~/img/juray.png" />
+                <img src="~/img/JBuzz_logo_black@18x.png" style=" max-height: 30px; " />
             </a>
 
             <!-- Sidebar -->
@@ -272,14 +272,46 @@
                                     </p>
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a asp-page="/Projects/Index" asp-area="User" class="nav-link">
-                                    <i class="nav-icon fas fa-chart-bar"></i>
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-chart-pie"></i>
                                     <p>
-                                        Projects
+                                        Newsletters / Mails
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                <ul class="nav nav-treeview" style="display: none;">
+
+                                    <li class="nav-item">
+                                        <a asp-page="/Projects/Index" asp-area="User" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Projects
+                                            </p>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a asp-page="/Mails/Index" asp-area="User" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Sent Mails
+                                            </p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-page="/Mails/ResponseList" asp-area="User" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>
+                                                Mail Responses
+                                            </p>
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
+
+
                             <li class="nav-item">
                                 <a asp-page="/Groups/Index" asp-area="User" class="nav-link">
                                     <i class="nav-icon fas fa-envelope"></i>
@@ -288,22 +320,7 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a asp-page="/Mails/Index" asp-area="User" class="nav-link">
-                                    <i class="nav-icon fas fa-envelope"></i>
-                                    <p>
-                                        Sent Mails
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-page="/Mails/ResponseList" asp-area="User" class="nav-link">
-                                    <i class="nav-icon fas fa-envelope"></i>
-                                    <p>
-                                        Mail Responses
-                                    </p>
-                                </a>
-                            </li>
+
                             <li class="nav-item">
                                 <a asp-page="/Servers/Index" asp-area="User" class="nav-link">
                                     <i class="nav-icon fas fa-laptop"></i>
@@ -312,6 +329,31 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a asp-page="/Servers/Index" asp-area="User" class="nav-link">
+                                    <i class="nav-icon fas fa-laptop"></i>
+                                    <p>
+                                        Subscription & Plans
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-page="/Servers/Index" asp-area="User" class="nav-link">
+                                    <i class="nav-icon fas fa-laptop"></i>
+                                    <p>
+                                        Wallet & Transactions
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-page="/Servers/Index" asp-area="User" class="nav-link">
+                                    <i class="nav-icon fas fa-laptop"></i>
+                                    <p>
+                                        Settings
+                                    </p>
+                                </a>
+                            </li>
+
                         }
 
 
@@ -378,7 +420,8 @@
     <div id="overlay" class="overlayspinner">
         <div class="spinner"></div>
     </div>
-    <form asp-area="Identity" id="logoutForm" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="get">
+    <form asp-area="Identity" id="logoutForm" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" method="post">
+        @Html.AntiForgeryToken()
     </form>
     <div class="modal fade" tabindex="-1" role="dialog" data-bs-backdrop="static" data-keyboard="false" id="main-form-modal">
         <div class="modal-dialog modal-lg" role="document">
@@ -417,7 +460,8 @@
     <script src="~/dashboard/plugins/jquery/jquery.min.js"></script>
     @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
     <!-- jQuery UI 1.11.4 -->
-    <script src="~/dashboard/plugins/bootstrap/js/bootstrap.bundle.js"></script>
+    @*<script src="~/dashboard/plugins/bootstrap/js/bootstrap.bundle.js"></script>*@
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
     <script src="~/js/site.js" asp-append-version="true"></script>

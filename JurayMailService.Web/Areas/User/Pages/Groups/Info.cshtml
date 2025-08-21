@@ -8,44 +8,95 @@
         <div class="card">
             <div class="card-header">
                 <h6 class="card-title">EMAIL GROUP MANAGEMENT</h6>
+                <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm float-right">Back</a>
 
 
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <div class="card card-default" style="min-height:300px;">
+                            <div class="card-header">
+                                <h3 class="card-title">Group Information</h3>
 
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <dl class="row">
+                            </div>
+                            <!-- /.card-header -->
 
-
-                                        <dt class="col-sm-2">
-                                            @Html.DisplayNameFor(model => model.EmailGroup.Name)
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Html.DisplayFor(model => model.EmailGroup.Name)
-                                        </dd>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <dl class="row">
 
 
-                                        <dt class="col-sm-2">
-                                            Emails
-                                        </dt>
-                                        <dd class="col-sm-10">
-                                            @Model.EmailGroup.Emails.Count()
-                                        </dd>
+                                            <dt class="col-sm-2">
+                                                @Html.DisplayNameFor(model => model.EmailGroup.Name)
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @Html.DisplayFor(model => model.EmailGroup.Name)
+                                            </dd>
 
 
-                                    </dl>
+                                            <dt class="col-sm-2">
+                                                Emails
+                                            </dt>
+                                            <dd class="col-sm-10">
+                                                @Model.EmailGroup.Emails.Count()
+                                            </dd>
+
+
+                                        </dl>
+
+                                    </div>
+
+                                    <a asp-page="./Update" asp-route-id="@Model.EmailGroup.Id" class="btn btn-danger btn-sm">Update Group Info</a>
+
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <div class="card card-default" style="min-height:300px;">
+                            <div class="card-header">
+                                <h3 class="card-title">Upload Email Contacts</h3>
+                                <a href="/Jbuzz_upload_sample.xlsx" target="_blank" class="btn btn-success btn-sm float-right">Download Sample</a>
+
+                            </div>
+                            <!-- /.card-header -->
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <form method="post" enctype="multipart/form-data">
+                                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                            <input asp-for="GroupId" value="@Model.EmailGroup.Id" type="hidden" />
+
+
+                                            <div class="form-group">
+                                                <label class="control-label">Excel File With the List</label><br />
+                                                <input type="file" class="control-label" asp-for="ExcelFile" required="required" />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="submit" value="Upload" class="btn btn-primary" />
+
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
+
 
 
             <div class="card-body">
@@ -68,7 +119,7 @@
 
                                         <th>Emails</th>
                                         <th>Phone</th>
-
+                                        <th>Actions</th>
 
                                     </tr>
                                 </thead>
@@ -97,7 +148,28 @@
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.PhoneNumber)
                                             </td>
+                                            <td>
+                                                <!-- Edit -->
+                                                <button type="button"
+                                                        class="btn btn-sm btn-primary"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editEmailModal"
+                                                        data-id="@item.Id"
+                                                        data-name="@item.Name"
+                                                        data-email="@item.Email"
+                                                        data-phone="@item.PhoneNumber">
+                                                    Edit
+                                                </button>
 
+                                                <!-- Delete -->
+                                                <button type="button"
+                                                        class="btn btn-sm btn-danger ms-1"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteEmailModal"
+                                                        data-id="@item.Id"
+                                                        data-name="@item.Name">
+                                                    Delete
+                                                </button>
                                         </tr>
                                     }
                                 </tbody>
@@ -108,48 +180,97 @@
             </div>
 
 
-            <div class="card-body">
-                <div class="card card-default">
-                    <div class="card-header">
-                        <h3 class="card-title">Upload Email Contacts</h3>
-
-                    </div>
-                    <!-- /.card-header -->
-
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <form method="post" enctype="multipart/form-data">
-                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                                    <input asp-for="GroupId" value="@Model.EmailGroup.Id" type="hidden" />
 
 
-                                    <div class="form-group">
-                                        <label class="control-label">Excel File With the List</label><br />
-                                        <input type="file" class="control-label" asp-for="ExcelFile" required="required" />
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" value="Upload" class="btn btn-primary" />
-
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
-
-                        <!-- /.row -->
-                    </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                    </div>
-                </div>
-
-            </div>
-
-            <div class="card-footer">
-                <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
-                <a asp-page="./Update" asp-route-id="@Model.EmailGroup.Id" class="btn btn-danger btn-sm">Update</a>
-            </div>
         </div>
     </div>
 </div>
+<!-- Edit Email Modal -->
+<div class="modal fade" id="editEmailModal" tabindex="-1" aria-labelledby="editEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="EditEmail">
+                @Html.AntiForgeryToken()
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="editEmailModalLabel">Edit Contact</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" name="EditEmail_Id" id="EditEmail_Id" />
+                    <input type="hidden" name="GroupId" value="@Model.EmailGroup.Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input class="form-control" name="EditEmail_Name" id="EditEmail_Name" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" name="EditEmail_Email" id="EditEmail_Email" type="email" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" name="EditEmail_PhoneNumber" id="EditEmail_PhoneNumber" />
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Delete Email Modal -->
+<div class="modal fade" id="deleteEmailModal" tabindex="-1" aria-labelledby="deleteEmailModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page-handler="DeleteEmail">
+                @Html.AntiForgeryToken()
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="deleteEmailModalLabel">Delete Contact</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <input type="hidden" name="DeleteEmail_Id" id="DeleteEmail_Id" />
+                    <input type="hidden" name="GroupId" value="@Model.EmailGroup.Id" />
+                    <p class="mb-0">Are you sure you want to delete <strong id="DeleteEmail_Name"></strong> from this group?</p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+  // Edit modal: fill inputs from data-attrs
+  const editModal = document.getElementById('editEmailModal');
+  editModal.addEventListener('show.bs.modal', event => {
+    const btn = event.relatedTarget;
+    document.getElementById('EditEmail_Id').value = btn.getAttribute('data-id');
+    document.getElementById('EditEmail_Name').value = btn.getAttribute('data-name') || '';
+    document.getElementById('EditEmail_Email').value = btn.getAttribute('data-email') || '';
+    document.getElementById('EditEmail_PhoneNumber').value = btn.getAttribute('data-phone') || '';
+  });
+
+  // Delete modal: set id + visible name
+  const deleteModal = document.getElementById('deleteEmailModal');
+  deleteModal.addEventListener('show.bs.modal', event => {
+    const btn = event.relatedTarget;
+    document.getElementById('DeleteEmail_Id').value = btn.getAttribute('data-id');
+    document.getElementById('DeleteEmail_Name').textContent = btn.getAttribute('data-name') || '';
+  });
+    </script>
+
+}

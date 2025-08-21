@@ -30,24 +30,15 @@
                                                     Email
                                                 </dt>
                                                 <dd class="col-sm-10">
-                                                    @if(Model.MailInfoDto.EmailSendingStatus.EmailList != null) { 
-                                                    @Html.DisplayFor(model => model.MailInfoDto.EmailSendingStatus.EmailList.Name)
+                                                      @Html.DisplayFor(model => model.MailInfoDto.EmailSendingStatus.Name)
                                                         
                                                     <span>
-                                                        (@Html.DisplayFor(model => model.MailInfoDto.EmailSendingStatus.EmailList.Email))
+                                                        (@Html.DisplayFor(model => model.MailInfoDto.EmailSendingStatus.Email))
                                                     </span>
-
-                                                }
+ 
                                                 </dd>
 
-
-                                                <dt class="col-sm-2">
-                                                    @Html.DisplayNameFor(model => model.MailInfoDto.EmailSendingStatus.Group)
-                                                </dt>
-                                                <dd class="col-sm-10">
-                                                    @Html.DisplayFor(model => model.MailInfoDto.EmailSendingStatus.Group)
-                                                </dd>
-
+ 
 
                                                 <dt class="col-sm-2">
                                                     Email Project
@@ -151,9 +142,9 @@
                                     <p>@retunsdata.SentDate</p>
                                     <hr style="margin:0 !important;" />
                                     <h6>Email</h6>
-                                    @if(retunsdata.EmailList != null) { 
-                                    <p>@retunsdata.EmailList.Name (@retunsdata.EmailList.Email)</p>
-                                    }
+                                    
+                                    <p>@retunsdata.Name (@retunsdata.Email)</p>
+                                    
                                     <hr style="margin:0 !important;" />
 
 

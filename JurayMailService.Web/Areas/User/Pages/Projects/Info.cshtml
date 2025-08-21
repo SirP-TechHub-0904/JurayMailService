@@ -2,168 +2,151 @@
 @model JurayMailService.Web.Areas.User.Pages.Projects.InfoModel
 @{
 }
+
+
+
 <div class="row">
-    <div class="col-lg-12">
+
+    <!-- Card 1: Project Details -->
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Email Project Details</h5>
+
+            </div>
+            <div class="card-body">
+                <p><strong>Title:</strong> @Model.EmailProject.Name</p>
+                <p><strong>Subject:</strong> @Model.EmailProject.Subject</p>
+                <p><strong>Date:</strong> @Model.EmailProject.Date.ToString("dd MMM yyyy")</p>
+                <hr />
+                <p><strong>Template:</strong></p>
+                <!-- Modal Trigger Button -->
+                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#templatePreviewModal">
+                    View Template
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 2: Send to Group -->
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Send to Group</h5>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input type="hidden" asp-for="GroupModel.EmailProjectId" value="@Model.EmailProject.Id" />
+                    <div class="form-group">
+                        <label class="control-label">Choose Group</label>
+                        <select asp-for="GroupModel.EmailGroupId" asp-items="Model.GroupDropdown" class="form-control">
+                            <option value="">Choose Group</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GroupModel.AllGroups" class="control-label"></label>
+                        <input asp-for="GroupModel.AllGroups" />
+                        <span asp-validation-for="GroupModel.AllGroups" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Enter Bulk User Data (Format: name:email:phone,name:email:phone,...)</label>
+                        <textarea asp-for="BulkUserInput" class="form-control" rows="5" placeholder="name1:email1:phone1,name2:email2:phone2,..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Send" class="btn btn-primary" />
+                        <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card 3: Sent Emails -->
+    <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h6 class="card-title">PROJECT MANAGEMENT</h6>
-
-
+                <h5 class="mb-0">Project Sent Mails</h5>
             </div>
-
             <div class="card-body">
-        
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div>
-                                    <div class="row">
+                @if (Model.GroupSendingProjects?.Any() ?? false)
+                {
+                    int sn = 0;
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>S/N</th>
+                                 
+                                <th>Date</th>
+                                <th>Submitted Mails</th>
+                                <th></th>
 
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h6 class="card-title">Details</h6>
-
-
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <h4>@Html.DisplayNameFor(model => model.EmailProject.Name)</h4>
-                                                    <h6> @Html.DisplayFor(model => model.EmailProject.Name)</h6>
-                                                    <h4>@Html.DisplayNameFor(model => model.EmailProject.Subject)</h4>
-                                                    <h6> @Html.DisplayFor(model => model.EmailProject.Subject)</h6>
-
-                                                    <br />
-                                                    <h4> @Html.DisplayNameFor(model => model.EmailProject.Date)</h4>
-                                                    <h6> @Html.DisplayFor(model => model.EmailProject.Date)</h6>
-
-                                                    <br />
-                                                    <h4>@Html.DisplayNameFor(model => model.EmailProject.Template)</h4>
+                            </tr>
+                        </thead>
 
 
-                                                    <br />
-                                                    @Html.Raw(Model.EmailProject.Template)
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <div class="card card-default">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Project Sent Mail List</h3>
-
-                                                </div>
-                                                <!-- /.card-header -->
-
-                                                <div class="card-body">
-                                                    <table id="example1" class="table table-bordered table-striped">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>S/N</th>
-                                                                <th>
-                                                                    Group
-                                                                </th>
-
-                                                                <th>Date</th>
-                                                                <th>Submitted Mails</th>
 
 
-                                                            </tr>
-                                                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.GroupSendingProjects.OrderByDescending(x => x.Date))
+                            {
+                                <tr>
 
-                                                        @{
-                                                            int sn = 0;
-                                                        }
-                                                        <tbody>
-                                                            @foreach (var item in Model.GroupSendingProjects.OrderByDescending(x => x.Date))
-                                                            {
-                                                                <tr>
-
-                                                                    <td>
-                                                                        @{
-                                                                            sn++;
-                                                                        }
-                                                                        @sn
-                                                                    </td>
-                                                                    <td>
-                                                                        @if (item.AllGroups == true)
-                                                                        {
-                                                                            <span>All Groups (Without Duplicate)</span>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            @Html.DisplayFor(modelItem => item.EmailGroup.Name)
-
-                                                                        }
-
-                                                                    </td>
-                                                                    <td>
-                                                                        @item.Date.ToString("dd/MM/yyyy hh:mm tt")
-                                                                    </td>
-                                                                    <td>
-                                                                        @item.Submitted
-                                                                    </td>
-
-                                                                </tr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                            <div class="card card-default">
-                                                <div class="card-header">
-                                                    <h3 class="card-title">Select a group to Send Mail</h3>
-
-                                                </div>
-                                                <!-- /.card-header -->
-
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <form method="post" enctype="multipart/form-data">
-                                                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                                                                <input type="hidden" asp-for="GroupModel.EmailProjectId" value="@Model.EmailProject.Id" />
-                                                                <div class="form-group">
-                                                                    <label class="control-label">Choose Group</label>
-                                                                    <select asp-for="GroupModel.EmailGroupId" asp-items="Model.GroupDropdown" class="form-control">
-                                                                        <option value="">Choose Group</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label asp-for="GroupModel.AllGroups" class="control-label"></label>
-                                                                    <input asp-for="GroupModel.AllGroups" />
-                                                                    <span asp-validation-for="GroupModel.AllGroups" class="text-danger"></span>
-                                                                </div>
-
-                                                                <div class="form-group">
-                                                                    <input type="submit" value="Add" class="btn btn-primary" />
-                                                                    <a asp-page="./Index" class="btn bg-gradient-warning btn-sm" style="float:right;">Back</a>
-
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <!-- /.row -->
-                                                </div>
-                                                <!-- /.card-body -->
-                                                <div class="card-footer">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-               
-
-                    <div class="card-footer">
-                        <a href="javascript:history.back()" class="btn bg-gradient-warning btn-sm">Back</a>
-                        <a asp-page="./Update" asp-route-id="@Model.EmailProject.Id" class="btn btn-danger btn-sm">Update</a>
-                    </div>
-                </div>
+                                    <td>
+                                        @{
+                                            sn++;
+                                        }
+                                        @sn
+                                    </td>
+                                     
+                                    <td>
+                                        @item.Date.ToString("dd/MM/yyyy hh:mm tt")
+                                    </td>
+                                    <td>
+                                        @item.Submitted
+                                    </td>
+                                    <td>
+                                        <a asp-page="/Mails/Index" asp-route-groupSendingProjectId="@item.Id" class="btn btn-xs btn-primary">
+                                            Sent Mails
+                                        </a>
+                                        <a asp-page="/Mails/ResponseList" asp-route-emailProjectId="@item.Id" class="btn btn-xs btn-warning">
+                                            Response
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="alert alert-warning mb-0">No sent emails for this project yet.</div>
+                }
             </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!-- Modal Trigger -->
+ 
+<!-- Modal HTML -->
+<div class="modal fade" id="templatePreviewModal" tabindex="-1" aria-labelledby="templatePreviewLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="templatePreviewLabel">Template Preview</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Html.Raw(Model.EmailProject?.Template ?? "<p>No template available</p>")
+            </div>
+        </div>
+    </div>
 </div>

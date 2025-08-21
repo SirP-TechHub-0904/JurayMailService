@@ -11,10 +11,12 @@ namespace Application.Queries.EmailResponseStatusQueries
     public sealed class GetTotalCountEmailResponseStatusQuery : IRequest<int>
     {
         public string UserId { get; set; }
+        public long? EmailProjectId { get;set; }
 
-        public GetTotalCountEmailResponseStatusQuery(string userId)
+        public GetTotalCountEmailResponseStatusQuery(string userId, long? emailProjectId)
         {
             UserId = userId;
+            EmailProjectId = emailProjectId;
         }
 
         public class GetTotalCountEmailResponseStatusQueryHandler : IRequestHandler<GetTotalCountEmailResponseStatusQuery, int>
@@ -28,7 +30,7 @@ namespace Application.Queries.EmailResponseStatusQueries
 
             public async Task<int> Handle(GetTotalCountEmailResponseStatusQuery request, CancellationToken cancellationToken)
             {
-                return await _emailResponseStatusRepository.GetResponseTotalCountByUserIdAsync(request.UserId);
+                return await _emailResponseStatusRepository.GetResponseTotalCountByUserIdAsync(request.UserId, request.EmailProjectId);
 
             }
         }

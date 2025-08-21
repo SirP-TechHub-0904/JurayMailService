@@ -21,14 +21,27 @@ builder.Services.AddApplicationCustomServices();
 builder.Services.AddTransient<PostmarkClient>(_ => new PostmarkClient(builder.Configuration.GetSection("PostmarkSettings")["ServerToken"]));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-// Configure Identity
-builder.Services.AddIdentity<AppUser, AppRole>()
-    .AddEntityFrameworkStores<AppDBContext>()
-    .AddDefaultTokenProviders();
+  
 builder.Services.AddRazorPages();
 //builder.Services.AddHostedService<BackgroundServiceJob>();
 builder.Services.AddHostedService<TimerService>();
-
+builder.Services.AddIdentity<AppUser, AppRole>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false; // <-- disable special characters
+    options.Password.RequireLowercase = false;
+})
+            .AddEntityFrameworkStores<AppDBContext>()
+            .AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Identity/Account/Login";           // Redirect when not logged in
+    options.AccessDeniedPath = "/Identity/Account/AccessDenied"; // Redirect when access denied
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(300);
+    options.SlidingExpiration = true;
+});
 //builder.Services.AddSingleton<BackgroundServiceJob>();
 //builder.Services.AddHostedService<BackgroundServiceJob>(provider => provider.GetService<BackgroundServiceJob>());
 

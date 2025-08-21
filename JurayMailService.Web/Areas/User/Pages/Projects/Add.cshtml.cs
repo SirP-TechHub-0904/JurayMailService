@@ -32,6 +32,7 @@ namespace JurayMailService.Web.Areas.User.Pages.Projects
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 EmailProject.AppUserId = userId;
+                EmailProject.Date = DateTime.UtcNow.AddHours(1);
                 AddEmailProjectCommand Command = new AddEmailProjectCommand(EmailProject);
                 await _mediator.Send(Command);
                 TempData["success"] = "Success";

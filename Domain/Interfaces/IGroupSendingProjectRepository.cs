@@ -11,5 +11,6 @@ namespace Domain.Interfaces
     public interface IGroupSendingProjectRepository : IRepository<GroupSendingProject>
     {
         Task<List<GroupSendingProject>> GetGroupsByProject(long projectId);
+        Task<GroupSendingProject> GetById(long id);
     }
 }

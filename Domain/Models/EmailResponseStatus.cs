@@ -11,10 +11,11 @@ namespace Domain.Models
     {
         public long Id { get; set; }
 
-        public long? EmailListId { get; set; }
-        public EmailList EmailList { get; set; }
+        public long? EmailProjectId { get; set; }
+        public EmailProject? EmailProject { get; set; }
 
-
+        public string? Email { get; set; }
+        public string? Name { get; set; }
 
         public DateTime? SentDate { get; set; }
         public string? RecordType { get; set; }

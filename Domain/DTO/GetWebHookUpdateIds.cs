@@ -10,5 +10,6 @@ namespace Domain.DTO
     {
         public string UserId { get; set; }
         public long EmailId { get; set; }
+        public long? EmailProjectId { get; set; }
     }
 }

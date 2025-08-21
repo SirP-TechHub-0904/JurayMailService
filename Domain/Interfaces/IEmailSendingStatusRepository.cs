@@ -11,14 +11,14 @@ namespace Domain.Interfaces
 {
     public interface IEmailSendingStatusRepository : IRepository<EmailSendingStatus>
     {
-        Task<RegisterGroupEmailsDto> AddEmailsForSending(long projectId, long? groupId, bool sendToAllGroup);
+        Task<RegisterGroupEmailsDto> AddEmailsForSending(long projectId, long? groupId, bool sendToAllGroup, string bulkUserInput);
         Task<List<EmailSendingStatus>> ListByUserId(string userId);
 
-        Task<IEnumerable<EmailSendingStatus>> GetListByUserIdAsync(int pageNumber, int pageSize, string userId);
-        Task<IEnumerable<EmailResponseStatus>> GetResponseListByUserIdAsync(int pageNumber, int pageSize, string userId);
+        Task<IEnumerable<EmailSendingStatus>> GetListByUserIdAsync(int pageNumber, int pageSize, string userId, long? groupSendingProjectId);
+        Task<IEnumerable<EmailResponseStatus>> GetResponseListByUserIdAsync(int pageNumber, int pageSize, string userId, long? projectId);
 
-        Task<int> GetTotalCountByUserIdAsync(string userId);
-        Task<int> GetResponseTotalCountByUserIdAsync(string userId);
+        Task<int> GetTotalCountByUserIdAsync(string userId, long? projectId);
+        Task<int> GetResponseTotalCountByUserIdAsync(string userId, long? projectId);
 
         Task SendBatchEmailByEmailIds();
 

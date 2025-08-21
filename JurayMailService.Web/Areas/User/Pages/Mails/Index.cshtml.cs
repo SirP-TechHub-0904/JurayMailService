@@ -1,5 +1,6 @@
 using Application.Queries.EmailProjectQueries;
 using Application.Queries.EmailSendingStatusQueries;
+using Application.Queries.GroupSendingProjectQueries;
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Domain.Models;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace JurayMailService.Web.Areas.User.Pages.Mails
 {
@@ -29,7 +31,10 @@ namespace JurayMailService.Web.Areas.User.Pages.Mails
         public bool HasPreviousPage => PageNumber > 1;
         public bool HasNextPage => PageNumber < TotalPages;
         public IEnumerable<EmailSendingStatus> EmailSendingStatus { get; set; }
-        public async Task<IActionResult> OnGetAsync(int pagenumber)
+
+        public GroupSendingProject GroupSendingProject { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int pagenumber, long? groupSendingProjectId)
         {
             if(pagenumber == 0)
             {
@@ -38,15 +43,21 @@ namespace JurayMailService.Web.Areas.User.Pages.Mails
             PageNumber = pagenumber;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserId = userId;
-            ListByUserIdEmailSendingStatusQuery listQuery = new ListByUserIdEmailSendingStatusQuery(userId, PageSize, PageNumber);
+            ListByUserIdEmailSendingStatusQuery listQuery = new ListByUserIdEmailSendingStatusQuery(userId, PageSize, PageNumber, groupSendingProjectId);
             EmailSendingStatus = await _mediator.Send(listQuery);
 
 
 
-            GetTotalCountEmailSendingStatusQuery countCommand = new GetTotalCountEmailSendingStatusQuery(UserId);
+            GetTotalCountEmailSendingStatusQuery countCommand = new GetTotalCountEmailSendingStatusQuery(UserId, groupSendingProjectId);
             var totalCount = await _mediator.Send(countCommand);
             TotalPages = (int)Math.Ceiling((double)totalCount / PageSize);
-            
+
+
+            if (groupSendingProjectId.HasValue && groupSendingProjectId.Value > 0)
+            {
+                GetByIdGroupSendingProjectQuery grouplistquery = new GetByIdGroupSendingProjectQuery(groupSendingProjectId.Value);
+                GroupSendingProject = await _mediator.Send(grouplistquery);
+            }
 
             return Page();
         }

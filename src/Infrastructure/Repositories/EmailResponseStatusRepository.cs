@@ -32,7 +32,7 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<EmailResponseStatus>> GetResponseListByUserIdAsync(int pageNumber, int pageSize, string userId)
         {
             var list = _context.EmailResponseStatuses
-                .Include(x => x.EmailList)
+                .Include(x => x.EmailProject)
                 .Where(x => x.UserId == userId)
                 .OrderByDescending(e => e.SentDate)
                 .Skip(pageSize * (pageNumber - 1))

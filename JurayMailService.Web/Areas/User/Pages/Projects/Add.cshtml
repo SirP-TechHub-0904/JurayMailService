@@ -29,15 +29,28 @@
                         <input asp-for="EmailProject.Subject" class="form-control" />
                         <span asp-validation-for="EmailProject.Subject" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <label class="control-label d-block">
+                            Template (Note: Add the placeholders below anywhere you want the recipient’s details to appear in your message:)
+                            <ul style="margin-top: 5px;">
+                                <li>
+                                    <code>{{Name}}</code> — full name of the recipient
+                                    <button type="button" class="btn btn-sm btn-light ml-2" onclick="copyText(this, '{{Name}}')">Copy</button>
+                                </li>
+                              
+                                
+                            </ul>
+                        </label>
+                    </div>
+
+
+
 
                     <div class="form-group">
-                        <label asp-for="EmailProject.Date" class="control-label"></label>
-                        <input asp-for="EmailProject.Date" class="form-control" />
-                        <span asp-validation-for="EmailProject.Date" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="EmailProject.Template" class="control-label">Template (Note: '$$name$$' add these any where you want the fullname of the email holder to be)</label>
-                        <textarea asp-for="EmailProject.Template" class="form-control"></textarea>
+                        <label asp-for="EmailProject.Template" class="control-label">
+                            Template
+                        </label>
+                        <textarea asp-for="EmailProject.Template" class="form-control summernote"></textarea>
                         <span asp-validation-for="EmailProject.Template" class="text-danger"></span>
                     </div>
 
@@ -63,4 +76,18 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        function copyText(button, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const original = button.textContent;
+                button.textContent = 'Copied';
+                button.disabled = true;
+                setTimeout(() => {
+                    button.textContent = original;
+                    button.disabled = false;
+                }, 1500);
+            });
+        }
+    </script>
 }

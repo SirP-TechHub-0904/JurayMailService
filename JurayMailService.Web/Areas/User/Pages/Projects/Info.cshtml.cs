@@ -38,6 +38,8 @@ namespace JurayMailService.Web.Areas.User.Pages.Projects
         [BindProperty]
         public GroupSendingProject GroupModel { get; set; }
 
+        [BindProperty]
+        public string? BulkUserInput { get; set; }
         public List<SelectListItem> GroupDropdown { get; set; }
         public async Task<IActionResult> OnGetAsync(long id)
         {
@@ -68,7 +70,7 @@ namespace JurayMailService.Web.Areas.User.Pages.Projects
             try
             {
 
-                AddEmailSendingStatusCommand Command = new AddEmailSendingStatusCommand(GroupModel.EmailProjectId, GroupModel.EmailGroupId, GroupModel.AllGroups);
+                AddEmailSendingStatusCommand Command = new AddEmailSendingStatusCommand(GroupModel.EmailProjectId, GroupModel.EmailGroupId, GroupModel.AllGroups, BulkUserInput);
                var outcome = await _mediator.Send(Command);
                 TempData["success"] = "Success";
                 return RedirectToPage("./Info", new {id = GroupModel.EmailProjectId});

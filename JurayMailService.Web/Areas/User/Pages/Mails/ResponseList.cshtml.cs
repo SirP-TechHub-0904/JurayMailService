@@ -1,5 +1,6 @@
 using Application.Queries.EmailResponseStatusQueries;
 using Application.Queries.EmailSendingStatusQueries;
+using Application.Queries.GroupSendingProjectQueries;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,10 @@ namespace JurayMailService.Web.Areas.User.Pages.Mails
         public bool HasPreviousPage => PageNumber > 1;
         public bool HasNextPage => PageNumber < TotalPages;
         public IEnumerable<EmailResponseStatus> EmailSendingStatus { get; set; }
-        public async Task<IActionResult> OnGetAsync(int pagenumber)
+
+        public GroupSendingProject GroupSendingProject { get; set; }
+
+        public async Task<IActionResult> OnGetAsync(int pagenumber, long? emailProjectId)
         {
             if (pagenumber == 0)
             {
@@ -33,15 +37,20 @@ namespace JurayMailService.Web.Areas.User.Pages.Mails
             PageNumber = pagenumber;
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             UserId = userId;
-            ListByQueryEmailResponseStatusQuery listQuery = new ListByQueryEmailResponseStatusQuery(userId, PageSize, PageNumber);
+            ListByQueryEmailResponseStatusQuery listQuery = new ListByQueryEmailResponseStatusQuery(userId, PageSize, PageNumber, emailProjectId);
             EmailSendingStatus = await _mediator.Send(listQuery);
 
 
 
-            GetTotalCountEmailResponseStatusQuery countCommand = new GetTotalCountEmailResponseStatusQuery(UserId);
+            GetTotalCountEmailResponseStatusQuery countCommand = new GetTotalCountEmailResponseStatusQuery(UserId, emailProjectId);
             var totalCount = await _mediator.Send(countCommand);
             TotalPages = (int)Math.Ceiling((double)totalCount / PageSize);
 
+            if (emailProjectId.HasValue && emailProjectId.Value > 0)
+            {
+                GetByIdGroupSendingProjectQuery grouplistquery = new GetByIdGroupSendingProjectQuery(emailProjectId.Value);
+                GroupSendingProject = await _mediator.Send(grouplistquery);
+            }
 
             return Page();
         }

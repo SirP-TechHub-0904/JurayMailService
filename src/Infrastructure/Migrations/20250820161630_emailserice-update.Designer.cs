@@ -4,6 +4,7 @@ using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250820161630_emailserice-update")]
+    partial class emailsericeupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -247,19 +250,13 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long?>("EmailProjectId")
+                    b.Property<long?>("EmailListId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Log")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MessageId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RecordType")
@@ -273,7 +270,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmailProjectId");
+                    b.HasIndex("EmailListId");
 
                     b.HasIndex("UserId");
 
@@ -291,10 +288,7 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("EmailProjectId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("GroupSendingProjectId")
+                    b.Property<long>("EmailProjectId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Log")
@@ -327,8 +321,6 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EmailProjectId");
-
-                    b.HasIndex("GroupSendingProjectId");
 
                     b.HasIndex("UserId");
 
@@ -665,15 +657,15 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Domain.Models.EmailResponseStatus", b =>
                 {
-                    b.HasOne("Domain.Models.EmailProject", "EmailProject")
+                    b.HasOne("Domain.Models.EmailList", "EmailList")
                         .WithMany()
-                        .HasForeignKey("EmailProjectId");
+                        .HasForeignKey("EmailListId");
 
                     b.HasOne("Domain.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.Navigation("EmailProject");
+                    b.Navigation("EmailList");
 
                     b.Navigation("User");
                 });
@@ -682,19 +674,15 @@ namespace Infrastructure.Migrations
                 {
                     b.HasOne("Domain.Models.EmailProject", "EmailProject")
                         .WithMany()
-                        .HasForeignKey("EmailProjectId");
-
-                    b.HasOne("Domain.Models.GroupSendingProject", "GroupSendingProject")
-                        .WithMany()
-                        .HasForeignKey("GroupSendingProjectId");
+                        .HasForeignKey("EmailProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Domain.Models.AppUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
                     b.Navigation("EmailProject");
-
-                    b.Navigation("GroupSendingProject");
 
                     b.Navigation("User");
                 });

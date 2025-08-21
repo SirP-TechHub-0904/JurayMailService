@@ -36,141 +36,200 @@ namespace Application.Extensions
     {
         public static IServiceCollection AddApplicationCustomServices(this IServiceCollection services)
         {
+            // -----------------------------
+            // Repositories (Scoped = EF Core-friendly)
+            // -----------------------------
+            services.AddScoped<IEmailListRepository, EmailListRepository>();
+            services.AddScoped<IEmailProjectRepository, EmailProjectRepository>();
+            services.AddScoped<IEmailResponseStatusRepository, EmailResponseStatusRepository>();
+            services.AddScoped<IEmailSendingStatusRepository, EmailSendingStatusRepository>();
+            services.AddScoped<IEmailGroupRepository, EmailGroupRepository>();
+            services.AddScoped<IGroupSendingProjectRepository, GroupSendingProjectRepository>();
+            services.AddScoped<IServerRepository, ServerRepository>();
+            services.AddScoped<IPlanRepository, PlanRepository>();
+            services.AddScoped<IPlanFeatureRepository, PlanFeatureRepository>();
+            services.AddScoped<ITransactionRepository, TransactionRepository>();
+            services.AddScoped<IWalletRepository, WalletRepository>();
+            services.AddScoped<IAccountSubscriptionRepository, AccountSubscriptionRepository>();
 
-            //
-            services.AddTransient<IEmailListRepository, EmailListRepository>();
-            services.AddTransient<IEmailProjectRepository, EmailProjectRepository>();
-            services.AddTransient<IEmailResponseStatusRepository, EmailResponseStatusRepository>();
-            services.AddTransient<IEmailSendingStatusRepository, EmailSendingStatusRepository>();
-            services.AddTransient<IServerRepository, ServerRepository>();
-            services.AddTransient<IEmailGroupRepository, EmailGroupRepository>();
-            services.AddTransient<IGroupSendingProjectRepository, GroupSendingProjectRepository>();
-            services.AddTransient<IPlanRepository, PlanRepository>();
-
-
-            //Register Queries and Handlers
-            services.AddTransient<IRequestHandler<GetByIdServerQuery, Server>, GetByIdServerQuery.GetByIdServerQueryHandler>();
-            services.AddTransient<IRequestHandler<GetDashboardQuery, DashboardDto>, GetDashboardQuery.GetDashboardQueryHandler>();
-            services.AddTransient<IRequestHandler<ListProjectByUserId, List<EmailProject>>, ListProjectByUserId.ListProjectByUserIdHandler>();
-            services.AddTransient<IRequestHandler<GetByIdEmailProjectQuery, EmailProject>, GetByIdEmailProjectQuery.GetByIdEmailProjectQueryHandler>();
-
-            services.AddTransient<IRequestHandler<GetByIdEmailGroupQuery, EmailGroup>, GetByIdEmailGroupQuery.GetByIdEmailGroupQueryHandler>();
-            services.AddTransient<IRequestHandler<ListAllByUserIdEmailGroupQuery, List<EmailGroup>>, ListAllByUserIdEmailGroupQuery.ListAllByUserIdEmailGroupQueryHandler>();
-
-
-            services.AddTransient<IRequestHandler<ListAllByUserIdEmailListQuery, List<EmailList>>, ListAllByUserIdEmailListQuery.ListAllByUserIdEmailListQueryHandler>();
-            services.AddTransient<IRequestHandler<ListByGroupIdEmailListQuery, List<EmailList>>, ListByGroupIdEmailListQuery.ListByGroupIdEmailListQueryHandler>();
-            services.AddTransient<IRequestHandler<ListByUserIdServerQuery, List<Server>>, ListByUserIdServerQuery.ListByUserIdServerQueryHandler>();
-            services.AddTransient<IRequestHandler<ListGroupSendingProjectByProjectIdQuery, List<GroupSendingProject>>, ListGroupSendingProjectByProjectIdQuery.ListGroupSendingProjectByProjectIdQueryHandler>();
-            services.AddTransient<IRequestHandler<ListByUserIdEmailSendingStatusQuery, IEnumerable<EmailSendingStatus>>, ListByUserIdEmailSendingStatusQuery.ListByUserIdEmailSendingStatusQueryHandler>();
-            services.AddTransient<IRequestHandler<ListByQueryEmailResponseStatusQuery, IEnumerable<EmailResponseStatus>>, ListByQueryEmailResponseStatusQuery.ListByQueryEmailResponseStatusQueryHandler>();
-            services.AddTransient<IRequestHandler<GetTotalCountEmailSendingStatusQuery, int>, GetTotalCountEmailSendingStatusQuery.GetTotalCountEmailSendingStatusQueryHandler>();
-            services.AddTransient<IRequestHandler<GetTotalCountEmailResponseStatusQuery, int>, GetTotalCountEmailResponseStatusQuery.GetTotalCountEmailResponseStatusQueryHandler>();
-            services.AddTransient<IRequestHandler<GetByIdEmailSendingStatusQuery, EmailSendingStatus>, GetByIdEmailSendingStatusQuery.GetByIdEmailSendingStatusQueryHandler>();
-            services.AddTransient<IRequestHandler<GetEmailListIdbyMessageIdQuery, WebHookUpdateIds>, GetEmailListIdbyMessageIdQuery.GetEmailListIdbyMessageIdQueryHandler>();
-            services.AddTransient<IRequestHandler<ListAllEmailResponseByMessageIdQuery, MailInfoDto>, ListAllEmailResponseByMessageIdQuery.ListAllEmailResponseByMessageIdQueryHandler>();
-
-
-            services.AddTransient<IWalletRepository, WalletRepository>();
-            services.AddTransient<IAccountSubscriptionRepository, AccountSubscriptionRepository>();
-
-
-
-            services.AddScoped<IRequestHandler<AddEmailResponseStatusCommand>>(sp =>
+            // -----------------------------
+            // MediatR – scan the Application assembly for ALL handlers
+            // -----------------------------
+            services.AddMediatR(cfg =>
             {
-                // Resolve  
-                var repository = sp.GetRequiredService<IEmailResponseStatusRepository>();
-                return new AddEmailResponseStatusCommandHandler(repository);
-            });
-            services.AddScoped<IRequestHandler<UpdateMailWebhookCommand>>(sp =>
-             {
-                 // Resolve  
-                 var repository = sp.GetRequiredService<IMediator>();
-                 return new UpdateMailWebhookCommandHandler(repository);
-             });
-
-            services.AddScoped<IRequestHandler<UploadEmailsToGroup>>(sp =>
-             {
-                 // Resolve  
-                 var repository = sp.GetRequiredService<IEmailListRepository>();
-                 return new UploadEmailsToGroupHandler(repository);
-             });
-            services.AddScoped<IRequestHandler<UpdateEmailGroupCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IEmailGroupRepository>();
-                return new UpdateEmailGroupCommandHandler(repository);
+                // Use any type in the Application assembly as the anchor.
+                cfg.RegisterServicesFromAssembly(typeof(UpdateEmailListCommand).Assembly);
             });
 
-            services.AddScoped<IRequestHandler<AddEmailGroupCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IEmailGroupRepository>();
-                return new AddEmailGroupCommandHandler(repository);
-            });
-
-
-
-            // Register Command and Handler
-            services.AddScoped<IRequestHandler<UpdateEmailProjectCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IEmailProjectRepository>();
-                return new UpdateEmailProjectCommandHandler(repository);
-            });
-
-            services.AddScoped<IRequestHandler<AddEmailProjectCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IEmailProjectRepository>();
-                return new AddEmailProjectCommandHandler(repository);
-            });
-            //
-            services.AddScoped<IRequestHandler<AddServerCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IServerRepository>();
-                return new AddServerCommandHandler(repository);
-            });
-
-            services.AddScoped<IRequestHandler<DeleteServerCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IServerRepository>();
-                return new DeleteServerCommandHandler(repository);
-            });
-            services.AddScoped<IRequestHandler<UpdateServerCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IServerRepository>();
-                return new UpdateServerCommandHandler(repository);
-            });
-            //
-            services.AddScoped<IRequestHandler<AddGroupSendingProjectCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IGroupSendingProjectRepository>();
-                return new AddGroupSendingProjectCommandHandler(repository);
-            });
-            services.AddScoped<IRequestHandler<AddEmailSendingStatusCommand, RegisterGroupEmailsDto>, AddEmailSendingStatusCommandHandler>();
-            services.AddScoped<IRequestHandler<AddPlanCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IPlanRepository>();
-                return new AddPlanCommandHandler(repository);
-            });
-
-            services.AddScoped<IRequestHandler<UpdatePlanCommand>>(sp =>
-            {
-                // Resolve  
-                var repository = sp.GetRequiredService<IPlanRepository>();
-                return new UpdatePlanCommandHandler(repository);
-            });
-            services.AddTransient<IRequestHandler<ListAllPlanQuery, List<Plan>>, ListAllPlanQuery.ListAllPlanQueryHandler>();
-            services.AddTransient<IRequestHandler<GetByIdPlanQuery, Plan>, GetByIdPlanQuery.GetByIdPlanQueryHandler>();
+            // -----------------------------
+            // IMPORTANT:
+            // Remove all manual IRequestHandler registrations and factories below.
+            // MediatR scanning + DI will resolve constructor dependencies (repositories) automatically.
+            // -----------------------------
 
             return services;
         }
+
+
+        ////    public static IServiceCollection AddApplicationCustomServices(this IServiceCollection services)
+        ////    {
+
+        ////        //
+        ////        services.AddTransient<IEmailListRepository, EmailListRepository>();
+        ////        services.AddTransient<IEmailProjectRepository, EmailProjectRepository>();
+        ////        services.AddTransient<IEmailResponseStatusRepository, EmailResponseStatusRepository>();
+        ////        services.AddTransient<IEmailSendingStatusRepository, EmailSendingStatusRepository>();
+        ////        services.AddTransient<IServerRepository, ServerRepository>();
+        ////        services.AddTransient<IEmailGroupRepository, EmailGroupRepository>();
+        ////        services.AddTransient<IGroupSendingProjectRepository, GroupSendingProjectRepository>();
+        ////        services.AddTransient<IPlanRepository, PlanRepository>();
+
+
+        ////        //Register Queries and Handlers
+        ////        services.AddTransient<IRequestHandler<GetByIdServerQuery, Server>, GetByIdServerQuery.GetByIdServerQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<GetDashboardQuery, DashboardDto>, GetDashboardQuery.GetDashboardQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListProjectByUserId, List<EmailProject>>, ListProjectByUserId.ListProjectByUserIdHandler>();
+        ////        services.AddTransient<IRequestHandler<GetByIdEmailProjectQuery, EmailProject>, GetByIdEmailProjectQuery.GetByIdEmailProjectQueryHandler>();
+
+        ////        services.AddTransient<IRequestHandler<GetByIdEmailGroupQuery, EmailGroup>, GetByIdEmailGroupQuery.GetByIdEmailGroupQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListAllByUserIdEmailGroupQuery, List<EmailGroup>>, ListAllByUserIdEmailGroupQuery.ListAllByUserIdEmailGroupQueryHandler>();
+
+
+        ////        services.AddTransient<IRequestHandler<ListAllByUserIdEmailListQuery, List<EmailList>>, ListAllByUserIdEmailListQuery.ListAllByUserIdEmailListQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListByGroupIdEmailListQuery, List<EmailList>>, ListByGroupIdEmailListQuery.ListByGroupIdEmailListQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListByUserIdServerQuery, List<Server>>, ListByUserIdServerQuery.ListByUserIdServerQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListGroupSendingProjectByProjectIdQuery, List<GroupSendingProject>>, ListGroupSendingProjectByProjectIdQuery.ListGroupSendingProjectByProjectIdQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListByUserIdEmailSendingStatusQuery, IEnumerable<EmailSendingStatus>>, ListByUserIdEmailSendingStatusQuery.ListByUserIdEmailSendingStatusQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListByQueryEmailResponseStatusQuery, IEnumerable<EmailResponseStatus>>, ListByQueryEmailResponseStatusQuery.ListByQueryEmailResponseStatusQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<GetTotalCountEmailSendingStatusQuery, int>, GetTotalCountEmailSendingStatusQuery.GetTotalCountEmailSendingStatusQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<GetTotalCountEmailResponseStatusQuery, int>, GetTotalCountEmailResponseStatusQuery.GetTotalCountEmailResponseStatusQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<GetByIdEmailSendingStatusQuery, EmailSendingStatus>, GetByIdEmailSendingStatusQuery.GetByIdEmailSendingStatusQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<GetEmailListIdbyMessageIdQuery, WebHookUpdateIds>, GetEmailListIdbyMessageIdQuery.GetEmailListIdbyMessageIdQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<ListAllEmailResponseByMessageIdQuery, MailInfoDto>, ListAllEmailResponseByMessageIdQuery.ListAllEmailResponseByMessageIdQueryHandler>();
+
+
+        ////        services.AddTransient<IWalletRepository, WalletRepository>();
+        ////        services.AddTransient<IAccountSubscriptionRepository, AccountSubscriptionRepository>();
+
+
+
+        ////        services.AddScoped<IRequestHandler<AddEmailResponseStatusCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IEmailResponseStatusRepository>();
+        ////            return new AddEmailResponseStatusCommandHandler(repository);
+        ////        });
+        ////        services.AddScoped<IRequestHandler<UpdateMailWebhookCommand>>(sp =>
+        ////         {
+        ////             // Resolve  
+        ////             var repository = sp.GetRequiredService<IMediator>();
+        ////             return new UpdateMailWebhookCommandHandler(repository);
+        ////         });
+
+        ////        services.AddScoped<IRequestHandler<UploadEmailsToGroup>>(sp =>
+        ////         {
+        ////             // Resolve  
+        ////             var repository = sp.GetRequiredService<IEmailListRepository>();
+        ////             return new UploadEmailsToGroupHandler(repository);
+        ////         });
+        ////        services.AddScoped<IRequestHandler<UpdateEmailGroupCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IEmailGroupRepository>();
+        ////            return new UpdateEmailGroupCommandHandler(repository);
+        ////        });
+
+        ////        services.AddScoped<IRequestHandler<AddEmailGroupCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IEmailGroupRepository>();
+        ////            return new AddEmailGroupCommandHandler(repository);
+        ////        });
+
+
+
+        ////        // Register Command and Handler
+        ////        services.AddScoped<IRequestHandler<UpdateEmailProjectCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IEmailProjectRepository>();
+        ////            return new UpdateEmailProjectCommandHandler(repository);
+        ////        });
+
+        ////        services.AddScoped<IRequestHandler<AddEmailProjectCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IEmailProjectRepository>();
+        ////            return new AddEmailProjectCommandHandler(repository);
+        ////        });
+        ////        //
+        ////        services.AddScoped<IRequestHandler<AddServerCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IServerRepository>();
+        ////            return new AddServerCommandHandler(repository);
+        ////        });
+
+        ////        services.AddScoped<IRequestHandler<DeleteServerCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IServerRepository>();
+        ////            return new DeleteServerCommandHandler(repository);
+        ////        });
+        ////        services.AddScoped<IRequestHandler<UpdateServerCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IServerRepository>();
+        ////            return new UpdateServerCommandHandler(repository);
+        ////        });
+        ////        //
+        ////        services.AddScoped<IRequestHandler<AddGroupSendingProjectCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IGroupSendingProjectRepository>();
+        ////            return new AddGroupSendingProjectCommandHandler(repository);
+        ////        });
+        ////        services.AddScoped<IRequestHandler<AddEmailSendingStatusCommand, RegisterGroupEmailsDto>, AddEmailSendingStatusCommandHandler>();
+        ////        services.AddScoped<IRequestHandler<AddPlanCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IPlanRepository>();
+        ////            return new AddPlanCommandHandler(repository);
+        ////        });
+
+        ////        services.AddScoped<IRequestHandler<UpdatePlanCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IPlanRepository>();
+        ////            return new UpdatePlanCommandHandler(repository);
+        ////        });
+        ////        services.AddTransient<IRequestHandler<ListAllPlanQuery, List<Plan>>, ListAllPlanQuery.ListAllPlanQueryHandler>();
+        ////        services.AddTransient<IRequestHandler<GetByIdPlanQuery, Plan>, GetByIdPlanQuery.GetByIdPlanQueryHandler>();
+        ////        services.AddTransient<
+        ////IRequestHandler<GetByIdGroupSendingProjectQuery, GroupSendingProject>,
+        ////GetByIdGroupSendingProjectQuery.GetByIdGroupSendingProjectQueryHandler>();
+
+
+
+        ////        services.AddMediatR(cfg =>
+        ////        {
+        ////            cfg.RegisterServicesFromAssembly(typeof(UpdateEmailListCommand).Assembly);
+        ////        });
+
+        ////        services.AddScoped<IRequestHandler<UpdateEmailListCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IEmailListRepository>();
+        ////            return new UpdateEmailListCommandHandler(repository);
+        ////        });
+        ////        services.AddScoped<IRequestHandler<DeleteEmailListCommand>>(sp =>
+        ////        {
+        ////            // Resolve  
+        ////            var repository = sp.GetRequiredService<IEmailListRepository>();
+        ////            return new DeleteEmailListCommandHandler(repository);
+        ////        });
+        ////        return services;
+        ////    }
     }
 
 }

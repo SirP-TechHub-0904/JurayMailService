@@ -71,6 +71,54 @@ namespace JurayMailService.Web.Areas.User.Pages.Groups
 
             }
         }
+
+
+        [BindProperty] public long EditEmail_Id { get; set; }
+        [BindProperty] public string EditEmail_Name { get; set; }
+        [BindProperty] public string EditEmail_Email { get; set; }
+        [BindProperty] public string EditEmail_PhoneNumber { get; set; }
+
+        [BindProperty] public long DeleteEmail_Id { get; set; }
+
+        // Edit handler
+        public async Task<IActionResult> OnPostEditEmailAsync()
+        {
+            // 1) Load existing contact
+            var existing = await _mediator.Send(new GetByIdEmailListQuery(EditEmail_Id));
+            if (existing is null)
+            {
+                TempData["error"] = "Contact not found.";
+                return RedirectToPage("./Info", new { id = GroupId });
+            }
+
+            // 2) Apply edits (trim + keep existing when empty)
+            existing.Name = string.IsNullOrWhiteSpace(EditEmail_Name) ? existing.Name : EditEmail_Name.Trim();
+            existing.Email = string.IsNullOrWhiteSpace(EditEmail_Email) ? existing.Email : EditEmail_Email.Trim();
+            existing.PhoneNumber = string.IsNullOrWhiteSpace(EditEmail_PhoneNumber) ? existing.PhoneNumber : EditEmail_PhoneNumber.Trim();
+
+            // Optional: basic email guard
+            if (string.IsNullOrWhiteSpace(existing.Email))
+            {
+                TempData["error"] = "Email is required.";
+                return RedirectToPage("./Info", new { id = GroupId });
+            }
+
+            // 3) Persist
+            await _mediator.Send(new UpdateEmailListCommand(existing));
+
+            TempData["success"] = "Contact updated.";
+            return RedirectToPage("./Info", new { id = GroupId });
+        }
+
+        // Delete handler
+        public async Task<IActionResult> OnPostDeleteEmailAsync()
+        {
+            await _mediator.Send(new DeleteEmailListCommand(DeleteEmail_Id));
+            TempData["success"] = "Contact deleted.";
+            return RedirectToPage("./Info", new { id = GroupId });
+        }
+
+
     }
 
 }

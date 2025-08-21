@@ -13,16 +13,18 @@ namespace Application.Commands.EmailSendingStatusCommands
 {
     public sealed class AddEmailSendingStatusCommand : IRequest<RegisterGroupEmailsDto>
     {
-        public AddEmailSendingStatusCommand(long projectId, long? groupId, bool sendToAllGroup)
+        public AddEmailSendingStatusCommand(long projectId, long? groupId, bool sendToAllGroup, string bulkUserInput)
         {
             ProjectId = projectId;
             GroupId = groupId;
             SendToAllGroup = sendToAllGroup;
+            BulkUserInput = bulkUserInput;
         }
 
         public long ProjectId { get; set; }
         public long? GroupId { get; set; }
         public bool SendToAllGroup { get; set; }
+        public string BulkUserInput { get; set; }
     }
 
     public class AddEmailSendingStatusCommandHandler : IRequestHandler<AddEmailSendingStatusCommand, RegisterGroupEmailsDto>
@@ -37,7 +39,7 @@ namespace Application.Commands.EmailSendingStatusCommands
         public async Task<RegisterGroupEmailsDto> Handle(AddEmailSendingStatusCommand request, CancellationToken cancellationToken)
         {
 
-            var result = await _emailSendingStatusRepository.AddEmailsForSending(request.ProjectId, request.GroupId, request.SendToAllGroup);
+            var result = await _emailSendingStatusRepository.AddEmailsForSending(request.ProjectId, request.GroupId, request.SendToAllGroup, request.BulkUserInput);
 
             return result;
         }

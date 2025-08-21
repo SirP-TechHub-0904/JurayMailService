@@ -30,6 +30,7 @@ namespace Application.Queries.EmailSendingStatusQueries
                 {
                     EmailId = outcome.EmailId,
                     UserId = outcome.UserId,
+                    EmailProjectId = outcome.EmailProjectId
                 };
                 return result;
 

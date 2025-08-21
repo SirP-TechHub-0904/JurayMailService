@@ -11,17 +11,18 @@ namespace Application.Queries.EmailResponseStatusQueries
 {
    public sealed class ListByUserIdEmailRespondStatusQuery : IRequest<IEnumerable<EmailSendingStatus>>
     {
-        public ListByUserIdEmailRespondStatusQuery(string userId, int pageSize, int pageNumber)
+        public ListByUserIdEmailRespondStatusQuery(string userId, int pageSize, int pageNumber, long? groupSendingProjectId)
         {
             UserId = userId;
             PageSize = pageSize;
             PageNumber = pageNumber;
+            GroupSendingProjectId = groupSendingProjectId;
         }
 
         public string UserId { get; set; }
         public int PageSize { get; set; }
         public int PageNumber { get; set; }
-
+        public long? GroupSendingProjectId { get;set; }
         public class ListByUserIdEmailRespondStatusQueryHandler : IRequestHandler<ListByUserIdEmailRespondStatusQuery, IEnumerable<EmailSendingStatus>>
         {
             private readonly IEmailSendingStatusRepository _emailResponseStatusRepository;
@@ -33,7 +34,7 @@ namespace Application.Queries.EmailResponseStatusQueries
 
             public async Task<IEnumerable<EmailSendingStatus>> Handle(ListByUserIdEmailRespondStatusQuery request, CancellationToken cancellationToken)
             {
-                return await _emailResponseStatusRepository.GetListByUserIdAsync(request.PageNumber, request.PageSize, request.UserId);
+                return await _emailResponseStatusRepository.GetListByUserIdAsync(request.PageNumber, request.PageSize, request.UserId, request.GroupSendingProjectId);
 
             }
         }

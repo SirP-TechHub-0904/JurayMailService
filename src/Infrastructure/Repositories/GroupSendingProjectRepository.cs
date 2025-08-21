@@ -20,9 +20,15 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<GroupSendingProject> GetById(long id)
+        {
+            return await _context.GroupSendingProjects.Include(x => x.EmailProject).FirstOrDefaultAsync(x => x.Id == id);
+
+        }
+
         public async Task<List<GroupSendingProject>> GetGroupsByProject(long projectId)
         {
-           return await _context.GroupSendingProjects.Where(x=>x.EmailProjectId == projectId).ToListAsync();
+            return await _context.GroupSendingProjects.Where(x => x.EmailProjectId == projectId).ToListAsync();
         }
     }
 }

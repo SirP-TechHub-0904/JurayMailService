@@ -1,4 +1,5 @@
-﻿using Application.Queries.EmailSendingStatusQueries;
+﻿using Application.Queries.EmailListQueries;
+using Application.Queries.EmailSendingStatusQueries;
 using Domain.Interfaces;
 using Domain.Models;
 using MediatR;
@@ -45,12 +46,22 @@ namespace Application.Commands.EmailResponseStatusCommands
             if (outcome != null)
             {
                 //
+                GetByIdEmailListQuery emailCommand = new GetByIdEmailListQuery(outcome.EmailId);
+                var emailList = await _mediator.Send(emailCommand, cancellationToken);
+                
                 EmailResponseStatus newrecord = new EmailResponseStatus();
                 newrecord.Log = request.WebhookLog;
                 newrecord.RecordType = request.RecordType;
                 newrecord.SentDate = request.Date;
                 newrecord.MessageId = request.MessageId;
-                newrecord.EmailListId = outcome.EmailId;
+
+                if(emailList != null)
+                {
+                    newrecord.Email = emailList.Email;
+                    newrecord.Name = emailList.Name;
+                }
+                  
+                newrecord.EmailProjectId = outcome.EmailProjectId;
                 newrecord.UserId  = outcome.UserId;
                 AddEmailResponseStatusCommand command = new AddEmailResponseStatusCommand(newrecord);
                 await _mediator.Send(command);

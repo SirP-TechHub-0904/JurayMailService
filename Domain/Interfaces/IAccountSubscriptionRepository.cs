@@ -12,5 +12,6 @@ namespace Domain.Interfaces
     {
         Task<string> RenewSubscription(string userId);
         Task<AccountSubscription> GetByUserIdAsync(string userId);
-    }
+
+     }
 }

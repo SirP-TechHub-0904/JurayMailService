@@ -27,17 +27,18 @@ namespace Application.Queries.DashboardQueries
             private readonly IEmailResponseStatusRepository _emailresponse;
             private readonly IEmailListRepository _emailListRepository;
             private readonly IEmailProjectRepository _emailProjectRepository;
-
+            private readonly IPlanRepository _planRepository;
             private readonly IWalletRepository _walletRepository;
             private readonly IAccountSubscriptionRepository _userSubscriptionRepository;
 
-            public GetDashboardQueryHandler(IEmailListRepository emailListRepository, IEmailProjectRepository emailProjectRepository, IEmailResponseStatusRepository emailresponse, IWalletRepository walletRepository, IAccountSubscriptionRepository userSubscriptionRepository)
+            public GetDashboardQueryHandler(IEmailListRepository emailListRepository, IEmailProjectRepository emailProjectRepository, IEmailResponseStatusRepository emailresponse, IWalletRepository walletRepository, IAccountSubscriptionRepository userSubscriptionRepository, IPlanRepository planRepository)
             {
                 _emailListRepository = emailListRepository;
                 _emailProjectRepository = emailProjectRepository;
                 _emailresponse = emailresponse;
                 _walletRepository = walletRepository;
                 _userSubscriptionRepository = userSubscriptionRepository;
+                _planRepository = planRepository;
             }
 
             public async Task<DashboardDto> Handle(GetDashboardQuery request, CancellationToken cancellationToken)
@@ -70,14 +71,51 @@ namespace Application.Queries.DashboardQueries
                 var existingWallet = await _walletRepository.GetByUserIdAsync(request.UserId);
                 if (existingWallet == null)
                 {
+                    var newWallet = new Wallet
+                    {
+                        UserId = request.UserId,
+                        Balance = 0
+                    };
+
+                    await _walletRepository.AddAsync(newWallet);
+                    dashboard.Balance = 0;
+                }
+                else
+                {
                     dashboard.Balance = existingWallet.Balance;
                 }
 
                 var existingSubscription = await _userSubscriptionRepository.GetByUserIdAsync(request.UserId);
                 if (existingSubscription == null)
                 {
+                    var plans = await _planRepository.GetAllAsync();
+                      
+                       var freePlan = plans.FirstOrDefault(p => p.Price == 0);
+
+                    if (freePlan != null)
+                    {
+                        var newSubscription = new AccountSubscription
+                        {
+                            UserId = request.UserId,
+                            PlanId = freePlan.Id,
+                            RemainingEmailsForMonth = freePlan.MonthlyLimit,
+                            SubscriptionStartDate = DateTime.UtcNow,
+                            SubscriptionEndDate = DateTime.UtcNow.AddMonths(1)
+                        };
+
+                        await _userSubscriptionRepository.AddAsync(newSubscription);
+                        dashboard.Limit = freePlan.MonthlyLimit;
+                    }
+                    else
+                    {
+                        dashboard.Limit = 0;
+                    }
+                }
+                else
+                {
                     dashboard.Limit = existingSubscription.RemainingEmailsForMonth;
                 }
+
 
                 return dashboard;
 
